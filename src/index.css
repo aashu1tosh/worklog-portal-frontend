@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  /* Base color palette in light mode */
+  :root {
+    /* Background and Foreground Colors */
+    --background: hsl(240, 60%, 99%);
+    /* Light background */
+    --foreground: hsl(240, 6%, 23%);
+    /* Dark text color */
+
+    --complementary: hsl(35, 100%, 50%);
+    --complementary-foreground: hsl(240, 60%, 99%);
+    --complementary-light: hsl(35, 100%, 70%);
+    --complementary-dark: hsl(35, 100%, 40%);
+
+    /* Card and Popover Colors */
+    --card: hsl(240, 60%, 99%);
+    /* Light card background */
+    --card-foreground: hsl(240, 6%, 23%);
+    /* Dark card text color */
+    --popover: hsl(240, 60%, 99%);
+    /* Light popover background */
+    --popover-foreground: hsl(240, 6%, 23%);
+    /* Dark popover text color */
+
+    /* Primary and Secondary Colors */
+    --primary: hsl(3, 61%, 45%);
+    /* New Primary color: #b8322c */
+    --primary-foreground: hsl(240, 60%, 99%);
+    /* Text color for primary (usually light for dark primary) */
+    --primary-light: hsl(3, 61%, 65%);
+    /* Lighter variant of primary */
+    --primary-dark: hsl(3, 61%, 30%);
+    /* Darker variant of primary */
+
+    --secondary: hsl(198, 41%, 92%);
+    /* Secondary color (unchanged, but consider if it should complement new primary) */
+    --secondary-foreground: hsl(240, 6%, 23%);
+    /* Text color for secondary */
+    --secondary-light: hsl(198, 41%, 97%);
+    /* Lighter variant of secondary */
+    --secondary-dark: hsl(198, 41%, 70%);
+    /* Darker variant of secondary */
+
+    /* Muted and Accent Colors */
+    --muted: hsl(240, 61%, 20%);
+    /* Muted background color */
+    --muted-foreground: hsl(240, 6%, 70%);
+    /* Muted text color */
+    --muted-light: hsl(240, 61%, 30%);
+    /* Lighter variant of muted */
+    --muted-dark: hsl(240, 61%, 15%);
+    /* Darker variant of muted */
+
+    --accent: hsl(182, 44%, 92%);
+    /* Accent color (consider if it should complement new primary) */
+    --accent-foreground: hsl(240, 6%, 23%);
+    /* Text color for accent */
+    --accent-light: hsl(182, 44%, 100%);
+    /* Lighter variant of accent */
+    --accent-dark: hsl(182, 44%, 85%);
+    /* Darker variant of accent */
+
+    /* Destructive Error Colors */
+    --destructive: hsl(0, 85%, 60%);
+    /* Error or destructive action color (unchanged, often red) */
+    --destructive-foreground: hsl(240, 60%, 99%);
+    /* Text color for destructive */
+    --destructive-light: hsl(0, 62%, 79%);
+    /* Lighter variant of destructive */
+    --destructive-dark: hsl(0, 85%, 40%);
+    /* Darker variant of destructive */
+
+    /* Border, Input, and Ring Colors */
+    --border: hsl(240, 61%, 20%);
+    /* Default border color */
+    --input: hsl(240, 61%, 20%);
+    /* Input background color */
+    --ring: hsl(3, 61%, 55%);
+    /* Focus ring color (often related to primary) */
+
+    /* Border Radius */
+    --radius: 0.5rem;
+    /* Border radius for UI elements */
+
+    /* Dark Mode */
+    /* These dark mode colors are still in hex. You might want to convert them
+       to HSL for consistency with your light mode palette, and re-evaluate
+       them in the context of the new primary color. */
+    --dark-primary-400: #0e1117;
+    --dark-primary-500: #17181a;
+    --dark-primary-600: #1c1d20;
+    --dark-primary-900: #000;
+  }
+}
