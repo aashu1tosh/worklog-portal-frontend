@@ -1,12 +1,25 @@
-import { Button } from "@/components/ui/button"
 import { Toaster } from '@/components/ui/sonner'
-import { toast } from "sonner"
+import { Route, Routes } from "react-router-dom"
+import { authRoute } from './routes/AuthRoute'
 function App() {
   return (
     <div>
-      <Button onClick={() =>
-        toast.success("Event has been created")
-      }>Click me</Button>
+      <Routes>
+        {authRoute &&
+          authRoute?.length > 0 &&
+          authRoute.map((route, index) => {
+            return (
+              <Route path={route?.path} element={route?.element} key={index}>
+                {route?.children &&
+                  route?.children?.length > 0 &&
+                  route?.children.map((child, index) => {
+                    return <Route path={child?.path} element={child?.element} key={index} />
+                  })}
+              </Route>
+            )
+          })}
+
+      </Routes>
       <Toaster
         theme={'light' as 'light' | 'dark' | 'system'}
         closeButton={true}
