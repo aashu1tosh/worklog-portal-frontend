@@ -1,5 +1,7 @@
+
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
     Table,
     TableBody,
@@ -12,6 +14,8 @@ import {
     type ColumnDef,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
+    type RowSelectionState,
     useReactTable,
 } from '@tanstack/react-table'
 import { Loader2, Plus } from 'lucide-react'
@@ -41,6 +45,10 @@ interface DataTableProps<TData, TValue> {
     addButtonIcon?: ReactNode
     setAddOpen?: (data: boolean) => void
     customJsx?: ReactNode
+    rowSelection?: RowSelectionState
+    setRowSelection?: React.Dispatch<React.SetStateAction<RowSelectionState>>
+    onSelectedRowsChange?: (selectedRows: TData[]) => void
+    enableRowSelection?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -52,24 +60,78 @@ export function DataTable<TData, TValue>({
     addButton = false,
     tools,
     toolsButtonLabel = "Tools",
-    addButtonLabel = "Add",
+    addButtonLabel = "Add New",
     addButtonIcon,
     setAddOpen,
     customJsx,
+    rowSelection = {},
+    setRowSelection,
+    onSelectedRowsChange,
+    enableRowSelection = true,
 }: DataTableProps<TData, TValue>) {
+    // Create selection column
+    const selectionColumn: ColumnDef<TData, TValue> = {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+        size: 40,
+    }
+
+    // Combine selection column with user columns
+    const tableColumns = enableRowSelection
+        ? [selectionColumn, ...columns]
+        : columns
+
     const table = useReactTable({
         data,
-        columns,
+        columns: tableColumns,
         getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
         manualPagination: true,
         pageCount: pagination.totalPages,
+        state: {
+            rowSelection: enableRowSelection ? rowSelection : {},
+        },
+        onRowSelectionChange: enableRowSelection ? setRowSelection : undefined,
+        enableRowSelection: enableRowSelection,
+        getRowId: (row, index) => {
+            // Try to use 'id' field, fallback to index
+            return (row as any).id?.toString() || index.toString()
+        },
     })
+
+    // Handle selected rows change
+    React.useEffect(() => {
+        if (onSelectedRowsChange && enableRowSelection) {
+            const selectedRows = table.getSelectedRowModel().rows.map(row => row.original)
+            onSelectedRowsChange(selectedRows)
+        }
+    }, [rowSelection, onSelectedRowsChange, table, enableRowSelection])
 
     const handleAddClick = () => {
         if (setAddOpen) {
             setAddOpen(true)
         }
     }
+
+    const selectedRowsCount = enableRowSelection ? table.getSelectedRowModel().rows.length : 0
 
     return (
         <div className="space-y-4">
@@ -83,6 +145,13 @@ export function DataTable<TData, TValue>({
                         className="max-w-sm"
                         placeholder="Search..."
                     />
+
+                    {/* Selected rows indicator */}
+                    {enableRowSelection && selectedRowsCount > 0 && (
+                        <div className="text-sm text-muted-foreground">
+                            {selectedRowsCount} of {table.getFilteredRowModel().rows.length} row(s) selected
+                        </div>
+                    )}
                 </div>
 
                 <div className="flex items-center space-x-2">
@@ -156,7 +225,7 @@ export function DataTable<TData, TValue>({
                             ) : (
                                 <TableRow>
                                     <TableCell
-                                        colSpan={columns.length}
+                                        colSpan={tableColumns.length}
                                         className="h-24 text-center"
                                     >
                                         {loading ? (

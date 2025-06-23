@@ -349,7 +349,12 @@ function UsersTable() {
         refreshTable: false,
     })
 
-    const [users, setUsers] = useState<User[]>([])
+    const [users, setUsers] = useState<User[]>([{
+        name: "John Doe",
+        email: "email@email.com",
+        role: "Admin",
+        id: '1'
+    }])
     const [loading, setLoading] = useState(false)
     const [addOpen, setAddOpen] = useState(false)
 
