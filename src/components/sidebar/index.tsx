@@ -5,6 +5,7 @@ import {
   Shield,
   ChevronDown,
   ChevronRight,
+  Menu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -195,38 +196,23 @@ const Sidebar: React.FC<SidebarProps> = ({
         collapsed ? "w-16" : "w-64"
       }`}
     >
-      {/* Hamburger Menu - Shows on hover */}
+
       <div className="absolute top-4 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+        {'toogle bar'}
         <Button
           variant="ghost"
           size="sm"
           onClick={toggleSidebar}
           className="h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-800"
         >
-          {/* <Menu size={16} className="text-gray-500 dark:text-gray-400" /> */}
+          <Menu size={16} className="text-gray-500 dark:text-gray-400" />
         </Button>
-      </div>
-      {/* Sidebar Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">A</span>
-          </div>
-          <div>
-            <h2 className="font-semibold text-gray-900 dark:text-white text-sm">
-              Admin Panel
-            </h2>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Role: {userRole}
-            </p>
-          </div>
-        </div>
       </div>
 
       {/* Menu Items */}
       <ScrollArea className={`flex-1 px-3 py-4 ${collapsed ? "pt-16" : ""}`}>
         <nav className="space-y-1">
-          {items.map((item) => renderMenuItem(item))}
+          {items?.map((item) => renderMenuItem(item))}
         </nav>
       </ScrollArea>
 
