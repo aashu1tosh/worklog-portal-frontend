@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom'
 import LazyLoading from '../LazyLoading'
 const DashboardTemplate = LazyLoading(lazy(async () => await import('@/templates/Dashboard.template')))
 const Dashboard = LazyLoading(lazy(async () => await import('@/pages/dashboard')))
+const LoginLog = LazyLoading(lazy(async () => await import('@/pages/dashboard/loginlog')))
 
 export const userRoute = [
     {
@@ -22,6 +23,10 @@ export const userRoute = [
             {
                 path: 'home',
                 element: <Dashboard />,
+            },
+             {
+                path: 'login-log',
+                element: <LoginLog />,
             },
             {
                 path: '*',
