@@ -1,6 +1,6 @@
 export interface IPagination {
-    currentPage: number
-    perpage: number
+    page: number
+    limit: number
     searchTerm: string
     total: number
     totalPages: number

@@ -1,0 +1,191 @@
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table'
+import {
+    type ColumnDef,
+    flexRender,
+    getCoreRowModel,
+    useReactTable,
+} from '@tanstack/react-table'
+import { Loader2, Plus } from 'lucide-react'
+import React, { type ReactNode } from 'react'
+import { DataTablePagination } from './pagination/index'
+import { DataTableSearch } from './TableSearch'
+
+export interface IPagination {
+    page: number
+    limit: number
+    searchTerm: string
+    total: number
+    totalPages: number
+    refreshTable: boolean
+}
+
+interface DataTableProps<TData, TValue> {
+    columns: ColumnDef<TData, TValue>[]
+    loading?: boolean
+    data: TData[]
+    pagination: IPagination
+    setPagination: React.Dispatch<React.SetStateAction<IPagination>>
+    addButton?: boolean
+    tools?: ReactNode
+    toolsButtonLabel?: string
+    addButtonLabel?: string
+    addButtonIcon?: ReactNode
+    setAddOpen?: (data: boolean) => void
+    customJsx?: ReactNode
+}
+
+export function DataTable<TData, TValue>({
+    columns,
+    loading = false,
+    data,
+    pagination,
+    setPagination,
+    addButton = false,
+    tools,
+    toolsButtonLabel = "Tools",
+    addButtonLabel = "Add",
+    addButtonIcon,
+    setAddOpen,
+    customJsx,
+}: DataTableProps<TData, TValue>) {
+    const table = useReactTable({
+        data,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        manualPagination: true,
+        pageCount: pagination.totalPages,
+    })
+
+    const handleAddClick = () => {
+        if (setAddOpen) {
+            setAddOpen(true)
+        }
+    }
+
+    return (
+        <div className="space-y-4">
+            {/* Header Section - Search, Tools, Add Button */}
+            <div className="flex items-center justify-between">
+                <div className="flex flex-1 items-center space-x-2">
+                    {/* Search Component */}
+                    <DataTableSearch
+                        pagination={pagination}
+                        setPagination={setPagination}
+                        className="max-w-sm"
+                        placeholder="Search..."
+                    />
+                </div>
+
+                <div className="flex items-center space-x-2">
+                    {/* Custom JSX */}
+                    {customJsx}
+
+                    {/* Tools */}
+                    {tools && (
+                        <div className="flex items-center space-x-2">
+                            {tools}
+                        </div>
+                    )}
+
+                    {/* Add Button */}
+                    {addButton && (
+                        <Button onClick={handleAddClick} className="ml-2">
+                            {addButtonIcon || <Plus className="mr-2 h-4 w-4" />}
+                            {addButtonLabel}
+                        </Button>
+                    )}
+                </div>
+            </div>
+
+            {/* Table Section */}
+            <Card>
+                <div className="relative">
+                    {/* Loading Overlay */}
+                    {loading && (
+                        <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+                            <div className="flex items-center space-x-2">
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                <span className="text-sm text-muted-foreground">Loading...</span>
+                            </div>
+                        </div>
+                    )}
+
+                    <Table>
+                        <TableHeader>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <TableRow key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => (
+                                        <TableHead key={header.id}>
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
+                                        </TableHead>
+                                    ))}
+                                </TableRow>
+                            ))}
+                        </TableHeader>
+                        <TableBody>
+                            {table.getRowModel().rows?.length ? (
+                                table.getRowModel().rows.map((row) => (
+                                    <TableRow
+                                        key={row.id}
+                                        data-state={row.getIsSelected() && "selected"}
+                                    >
+                                        {row.getVisibleCells().map((cell) => (
+                                            <TableCell key={cell.id}>
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell
+                                        colSpan={columns.length}
+                                        className="h-24 text-center"
+                                    >
+                                        {loading ? (
+                                            <div className="flex items-center justify-center space-x-2">
+                                                <Loader2 className="h-4 w-4 animate-spin" />
+                                                <span>Loading...</span>
+                                            </div>
+                                        ) : pagination.searchTerm ? (
+                                            <div className="text-muted-foreground">
+                                                No results found for "{pagination.searchTerm}"
+                                            </div>
+                                        ) : (
+                                            <div className="text-muted-foreground">
+                                                No data available
+                                            </div>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
+
+                {/* Pagination */}
+                <DataTablePagination
+                    pagination={pagination}
+                    setPagination={setPagination}
+                />
+            </Card>
+        </div>
+    )
+}

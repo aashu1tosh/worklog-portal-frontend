@@ -1,10 +1,15 @@
-const index = () => {
-  return (
-    <div>
-      <h1>Login Log Page</h1>
-      <p>This is the login log page.</p>
-    </div>
-  );
-}   
+import UsersTable from "./tableDemo"
 
-export default index;
+const index = () => {
+
+  return (
+    <div className="flex flex-col items-center justify-center h-full w-full">
+      <h1 className="text-2xl font-bold">Login Log Page</h1>
+      <div className="w-full p-4">
+        <UsersTable />
+      </div>
+    </div>
+  )
+}
+
+export default index

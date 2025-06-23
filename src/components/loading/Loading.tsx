@@ -11,7 +11,6 @@ const Loading: React.FC<LoadingComponentProps> = ({ loadingTime, loading, childr
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        // Convert seconds to milliseconds
         const timer = setTimeout(
             () => {
                 setIsLoading(false)
@@ -19,11 +18,9 @@ const Loading: React.FC<LoadingComponentProps> = ({ loadingTime, loading, childr
             (loadingTime ?? 1) * 1000
         )
 
-        // Cleanup the timer when the component unmounts
         return () => clearTimeout(timer)
     }, [loadingTime])
 
-    // Loading effect
     if (isLoading || loading) {
         return (
             <div className='flex h-[100vh] w-full justify-center items-center dark:bg-dark-foreground'>
@@ -32,7 +29,6 @@ const Loading: React.FC<LoadingComponentProps> = ({ loadingTime, loading, childr
         )
     }
 
-    // After loading time, return children components
     return <>{children}</>
 }
 
