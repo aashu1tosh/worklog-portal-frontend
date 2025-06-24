@@ -34,8 +34,8 @@ export function useDataFetch<T, V = T | null>({
     queryFn: async () => {
       const response = await get(endpoint, {
         search: pagination.searchTerm,
-        page: pagination.page,
-        perpage: pagination.limit,
+        number: pagination.number,
+        size: pagination.size,
         ...queryParams,
       })
       if (!response?.status) throw new Error(response?.message)
@@ -50,8 +50,8 @@ export function useDataFetch<T, V = T | null>({
       setPagination({
         ...pagination,
         total: data.pagination?.total,
-        page: data.pagination?.page,
-        limit: data.pagination?.limit,
+        number: data.pagination?.number,
+        size: data.pagination?.size,
         totalPages: data.pagination?.totalPages,
         refreshTable: false,
       })

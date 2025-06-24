@@ -52,7 +52,7 @@ const PageNotFound = () => {
                         </Button>
 
                         <Button
-                            onClick={() => navigate('/')}
+                            onClick={() => navigate('/dashboard')}
                             variant="outline"
                             className='border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white px-8 py-3 rounded-full font-semibold transition-all duration-200'
                         >

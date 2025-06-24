@@ -106,6 +106,7 @@ const ShowLoginLog = (props: IProps) => {
         data={values ?? []}
         pagination={pagination}
         setPagination={setPagination}
+        tableSearch= {false}
       />
 
       <ConfirmationDialog

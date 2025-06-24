@@ -29,6 +29,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   pagination: IPagination;
   setPagination: React.Dispatch<React.SetStateAction<IPagination>>;
+  tableSearch?: boolean;
   addButton?: boolean;
   tools?: ReactNode;
   toolsButtonLabel?: string;
@@ -48,9 +49,10 @@ function DataTable<TData, TValue>({
   data,
   pagination,
   setPagination,
+  tableSearch = true,
   addButton = false,
   tools,
-  toolsButtonLabel = "Tools",
+  // toolsButtonLabel = "Tools",
   addButtonLabel = "Add New",
   addButtonIcon,
   setAddOpen,
@@ -133,13 +135,16 @@ function DataTable<TData, TValue>({
       {/* Header Section - Search, Tools, Add Button */}
       <div className="flex items-center justify-between">
         <div className="flex flex-1 items-center space-x-2">
-          {/* Search Component */}
-          <DataTableSearch
-            pagination={pagination}
-            setPagination={setPagination}
-            className="max-w-sm"
-            placeholder="Search..."
-          />
+          {tableSearch ? (
+            <DataTableSearch
+              pagination={pagination}
+              setPagination={setPagination}
+              className="max-w-sm"
+              placeholder="Search..."
+            />
+          ) : (
+            <div></div>
+          )}
 
           {/* Selected rows indicator */}
           {enableRowSelection && selectedRowsCount > 0 && (
