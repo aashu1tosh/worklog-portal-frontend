@@ -14,7 +14,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import useAuth from "@/hooks/useAuth";
+import { ROLE } from "@/constants/enum";
 
 
 interface MenuItem {
@@ -31,17 +33,22 @@ interface SidebarProps {
   isCollapsed?: boolean;
 }
 
-// Example menu items structure
 const menuItems: MenuItem[] = [
   {
     icon: <Home size={18} />,
     title: "Dashboard",
-    url: "/dashboard",
+    url: "/dashboard/home",
   },
   {
     icon: <Shield size={18} />,
     title: "Login Log",
     url: "/dashboard/login-log",
+  },
+    {
+    icon: <Shield size={18} />,
+    title: "Company",
+    url: "/dashboard/company",
+    roles: [ROLE.ADMIN, ROLE.SUDO_ADMIN],
   },
   {
     icon: <Settings size={18} />,
@@ -65,11 +72,13 @@ const menuItems: MenuItem[] = [
 
 const Sidebar: React.FC<SidebarProps> = ({
   items = menuItems,
-  userRole = "ADMIN",
   isCollapsed = false,
 }) => {
-    const navigate = useNavigate();
-  const [activeItem, setActiveItem] = useState<string>("/dashboard");
+  const navigate = useNavigate();
+  const pathname = useLocation();
+  const {authData} = useAuth();
+  const userRole = authData?.role
+
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const [collapsed, setCollapsed] = useState<boolean>(isCollapsed);
 
@@ -98,7 +107,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   // Handle menu item click
   const handleItemClick = (url?: string, title?: string): void => {
     if (url) {
-      setActiveItem(url);
       navigate(url);
     } else if (title) {
       toggleSubmenu(title);
@@ -110,16 +118,16 @@ const Sidebar: React.FC<SidebarProps> = ({
     item: MenuItem,
     isChild: boolean = false
   ): ReactNode => {
-    if (!hasRequiredRole(item.roles)) return null;
+    if (!hasRequiredRole(item?.roles)) return null;
 
-    const isActive = activeItem === item.url;
-    const hasChildren = item.children && item.children.length > 0;
-    const isOpen = openItems.has(item.title);
+    const isActive = pathname?.pathname === item?.url;
+    const hasChildren = item?.children && item?.children?.length > 0;
+    const isOpen = openItems.has(item?.title);
 
     if (hasChildren) {
       return (
         <Collapsible
-          key={item.title}
+          key={item?.title}
           open={isOpen}
           onOpenChange={() => toggleSubmenu(item.title)}
         >
@@ -129,15 +137,15 @@ const Sidebar: React.FC<SidebarProps> = ({
               className={`w-full justify-start gap-3 h-10 px-3 ${
                 isChild ? "pl-8" : ""
               } hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300`}
-              onClick={() => handleItemClick(undefined, item.title)}
+              onClick={() => handleItemClick(undefined, item?.title)}
             >
               {!isChild && (
                 <span className="text-gray-500 dark:text-gray-400">
-                  {item.icon}
+                  {item?.icon}
                 </span>
               )}
               <span className="flex-1 text-left text-sm font-medium">
-                {item.title}
+                {item?.title}
               </span>
               {isOpen ? (
                 <ChevronDown size={16} className="text-gray-400" />
@@ -209,7 +217,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Menu Items */}
-      <ScrollArea className={`flex-1 px-3 py-4 ${collapsed ? "pt-16" : ""}`}>
+      <ScrollArea className={`flex-1 px-3 py-4`}>
         <nav className="space-y-1">
           {items?.map((item) => renderMenuItem(item))}
         </nav>

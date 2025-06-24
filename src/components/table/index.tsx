@@ -50,7 +50,7 @@ function DataTable<TData, TValue>({
   pagination,
   setPagination,
   tableSearch = true,
-  addButton = false,
+  addButton = true,
   tools,
   // toolsButtonLabel = "Tools",
   addButtonLabel = "Add New",
