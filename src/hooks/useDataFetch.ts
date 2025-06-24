@@ -14,7 +14,7 @@ type UseDataFetchProps = {
   queryParams?: Record<string, unknown>
 }
 
-export function useDataFetch<T, V = T | null>({
+export function useDataFetch<T>({
   endpoint,
   customQueryKey,
   queryEnabled = true,
@@ -23,7 +23,7 @@ export function useDataFetch<T, V = T | null>({
 }: UseDataFetchProps) {
   const { get } = useAPI<T>()
   const [values, setValues] = useState<T[] | null>(null)
-  const [selectedValue, setSelectedValue] = useState<V | null>(null)
+  const [selectedId, setSelectedId] = useState<string | null>(null)
   const [addOpen, setAddOpen] = useState(false)
   const key = endpoint?.toString()
 
@@ -59,11 +59,11 @@ export function useDataFetch<T, V = T | null>({
   }, [data])
 
   useEffect(() => {
-    if (selectedValue) setAddOpen(true)
-  }, [selectedValue])
+    if (selectedId) setAddOpen(true)
+  }, [selectedId])
 
   useEffect(() => {
-    if (!addOpen) setSelectedValue(null)
+    if (!addOpen) setSelectedId(null)
   }, [addOpen])
 
   return {
@@ -72,7 +72,7 @@ export function useDataFetch<T, V = T | null>({
     values,
     addOpen,
     setAddOpen,
-    selectedValue,
-    setSelectedValue,
+    selectedId,
+    setSelectedId,
   }
 }
