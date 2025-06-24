@@ -34,7 +34,7 @@ export function useDataFetch<T, V = T | null>({
     queryFn: async () => {
       const response = await get(endpoint, {
         search: pagination.searchTerm,
-        number: pagination.number,
+        page: pagination.page,
         size: pagination.size,
         ...queryParams,
       })
@@ -50,7 +50,7 @@ export function useDataFetch<T, V = T | null>({
       setPagination({
         ...pagination,
         total: data.pagination?.total,
-        number: data.pagination?.number,
+        page: data.pagination?.page,
         size: data.pagination?.size,
         totalPages: data.pagination?.totalPages,
         refreshTable: false,

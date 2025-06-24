@@ -24,43 +24,43 @@ export function DataTablePagination({
     pagination,
     setPagination,
 }: DataTablePaginationProps) {
-    const { number, size, total, totalPages } = pagination
+    const { page, size, total, totalPages } = pagination
 
     // Calculate the range of items being displayed
-    const startItem = total === 0 ? 0 : (number - 1) * size + 1
-    const endItem = Math.min(number * size, total)
+    const startItem = total === 0 ? 0 : (page - 1) * size + 1
+    const endItem = Math.min(page * size, total)
 
-    // Handle number size change
+    // Handle page size change
     const handlePageSizeChange = (newLimit: string) => {
         const newLimitNumber = parseInt(newLimit)
         setPagination(prev => ({
             ...prev,
             size: newLimitNumber,
-            number: 1, // Reset to first number when changing number size
+            page: 1, // Reset to first page when changing page size
         }))
     }
 
-    // Handle number navigation
+    // Handle page navigation
     const handlePageChange = (newPage: number) => {
         if (newPage >= 1 && newPage <= totalPages) {
             setPagination(prev => ({
                 ...prev,
-                number: newPage,
+                page: newPage,
             }))
         }
     }
 
     // Navigation handlers
     const goToFirstPage = () => handlePageChange(1)
-    const goToPreviousPage = () => handlePageChange(number - 1)
-    const goToNextPage = () => handlePageChange(number + 1)
+    const goToPreviousPage = () => handlePageChange(page - 1)
+    const goToNextPage = () => handlePageChange(page + 1)
     const goToLastPage = () => handlePageChange(totalPages)
 
     return (
         <div className="flex items-center justify-between px-2 py-4">
-            {/* Left side - Rows per number selector */}
+            {/* Left side - Rows per page selector */}
             <div className="flex items-center space-x-2">
-                <p className="text-sm font-medium">Rows per number:</p>
+                <p className="text-sm font-medium">Rows per page:</p>
                 <Select
                     value={size?.toString()}
                     onValueChange={handlePageSizeChange}
@@ -91,36 +91,36 @@ export function DataTablePagination({
                         variant="outline"
                         className="hidden h-8 w-8 p-0 lg:flex"
                         onClick={goToFirstPage}
-                        disabled={number === 1}
+                        disabled={page === 1}
                     >
-                        <span className="sr-only">Go to first number</span>
+                        <span className="sr-only">Go to first page</span>
                         <ChevronsLeft className="h-4 w-4" />
                     </Button>
                     <Button
                         variant="outline"
                         className="h-8 w-8 p-0"
                         onClick={goToPreviousPage}
-                        disabled={number === 1}
+                        disabled={page === 1}
                     >
-                        <span className="sr-only">Go to previous number</span>
+                        <span className="sr-only">Go to previous page</span>
                         <ChevronLeft className="h-4 w-4" />
                     </Button>
                     <Button
                         variant="outline"
                         className="h-8 w-8 p-0"
                         onClick={goToNextPage}
-                        disabled={number === totalPages || totalPages === 0}
+                        disabled={page === totalPages || totalPages === 0}
                     >
-                        <span className="sr-only">Go to next number</span>
+                        <span className="sr-only">Go to next page</span>
                         <ChevronRight className="h-4 w-4" />
                     </Button>
                     <Button
                         variant="outline"
                         className="hidden h-8 w-8 p-0 lg:flex"
                         onClick={goToLastPage}
-                        disabled={number === totalPages || totalPages === 0}
+                        disabled={page === totalPages || totalPages === 0}
                     >
-                        <span className="sr-only">Go to last number</span>
+                        <span className="sr-only">Go to last page</span>
                         <ChevronsRight className="h-4 w-4" />
                     </Button>
                 </div>
