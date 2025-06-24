@@ -10,3 +10,12 @@
   transform: translateX(-38px);
   animation: l21 0.5s infinite alternate linear;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+input:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}

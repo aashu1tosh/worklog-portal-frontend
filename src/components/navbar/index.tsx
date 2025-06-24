@@ -28,7 +28,6 @@ import useAuth from "@/hooks/useAuth";
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const { authData } = useAuth();
-  console.log("🚀 ~ Navbar ~ authData:", authData);
   const [notifications] = useState(3);
 
   const changeTheme = () => {

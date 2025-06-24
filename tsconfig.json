@@ -9,11 +9,11 @@
     }
   ],
   "compilerOptions": {
+    "noImplicitAny": false,
+    "strict": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   }
 }

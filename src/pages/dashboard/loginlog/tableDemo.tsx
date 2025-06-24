@@ -312,76 +312,76 @@
 
 
 
-import { DataTable, type IPagination } from '@/components/table'
-import { Button } from '@/components/ui/button'
-import type { ColumnDef } from '@tanstack/react-table'
-import { useState } from 'react'
+// import { DataTable, type IPagination } from '@/components/table'
+// import { Button } from '@/components/ui/button'
+// import type { ColumnDef } from '@tanstack/react-table'
+// import { useState } from 'react'
 
-interface User {
-    id: string
-    name: string
-    email: string
-    role: string
-}
+// interface User {
+//     id: string
+//     name: string
+//     email: string
+//     role: string
+// }
 
-const columns: ColumnDef<User>[] = [
-    {
-        accessorKey: "name",
-        header: "Name",
-    },
-    {
-        accessorKey: "email",
-        header: "Email",
-    },
-    {
-        accessorKey: "role",
-        header: "Role",
-    },
-]
+// const columns: ColumnDef<User>[] = [
+//     {
+//         accessorKey: "name",
+//         header: "Name",
+//     },
+//     {
+//         accessorKey: "email",
+//         header: "Email",
+//     },
+//     {
+//         accessorKey: "role",
+//         header: "Role",
+//     },
+// ]
 
-function UsersTable() {
-    const [pagination, setPagination] = useState<IPagination>({
-        page: 1,
-        limit: 10,
-        searchTerm: '',
-        total: 100,
-        totalPages: 10,
-        refreshTable: false,
-    })
+// function UsersTable() {
+//     const [pagination, setPagination] = useState<IPagination>({
+//         page: 1,
+//         limit: 10,
+//         searchTerm: '',
+//         total: 100,
+//         totalPages: 10,
+//         refreshTable: false,
+//     })
 
-    const [users, setUsers] = useState<User[]>([{
-        name: "John Doe",
-        email: "email@email.com",
-        role: "Admin",
-        id: '1'
-    }])
-    const [loading, setLoading] = useState(false)
-    const [addOpen, setAddOpen] = useState(false)
+//     const [users, setUsers] = useState<User[]>([{
+//         name: "John Doe",
+//         email: "email@email.com",
+//         role: "Admin",
+//         id: '1'
+//     }])
+//     const [loading, setLoading] = useState(false)
+//     const [addOpen, setAddOpen] = useState(false)
 
-    return (
-        <DataTable
-            columns={columns}
-            data={users}
-            loading={loading}
-            pagination={pagination}
-            setPagination={setPagination}
-            addButton={true}
-            addButtonLabel="Add User"
-            setAddOpen={setAddOpen}
-            tools={
-                <>
-                    <Button variant="outline">Export</Button>
-                    <Button variant="outline">Import</Button>
-                </>
-            }
-            customJsx={
-                <div className="text-sm text-muted-foreground">
-                    Custom content here
-                </div>
-            }
-        />
-    )
-}
+//     return (
+//         <DataTable
+//             columns={columns}
+//             data={users}
+//             loading={loading}
+//             pagination={pagination}
+//             setPagination={setPagination}
+//             addButton={true}
+//             addButtonLabel="Add User"
+//             setAddOpen={setAddOpen}
+//             tools={
+//                 <>
+//                     <Button variant="outline">Export</Button>
+//                     <Button variant="outline">Import</Button>
+//                 </>
+//             }
+//             customJsx={
+//                 <div className="text-sm text-muted-foreground">
+//                     Custom content here
+//                 </div>
+//             }
+//         />
+//     )
+// }
 
-export default UsersTable
+// export default UsersTable
 

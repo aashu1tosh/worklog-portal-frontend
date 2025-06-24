@@ -9,5 +9,6 @@ export const endPoint = {
 
     loginLog: {
         getLoginLog: '/login-log',
+        logoutById: '/login-log/logout',
     }
 }

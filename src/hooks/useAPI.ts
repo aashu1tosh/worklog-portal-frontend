@@ -29,12 +29,10 @@ const useAPI = <T>() => {
                 message: 'Fetched',
             }
         } catch (error: unknown) {
-            let message = 'An error occurred'
-
             return {
                 status: false,
                 data: null,
-                message,
+                message: error instanceof Error ? error.message : 'An error occurred',
             }
         }
     }
@@ -59,12 +57,10 @@ const useAPI = <T>() => {
                 message: 'Fetched',
             }
         } catch (error: unknown) {
-            let message = 'An error occurred'
-
             return {
                 status: false,
                 data: null,
-                message: error instanceof Error ? error.message : message,
+                message: error instanceof Error ? error.message : 'An error occurred',
             }
         }
     }
@@ -78,12 +74,10 @@ const useAPI = <T>() => {
                 message: response?.data?.message || 'Fetched Successfully',
             }
         } catch (error: unknown) {
-            let message = 'An error occurred'
-
             return {
                 status: false,
                 data: null,
-                message: error instanceof Error ? error?.message : message
+                message: error instanceof Error ? error?.message : 'An error occurred'
             }
         }
     }
@@ -97,28 +91,25 @@ const useAPI = <T>() => {
                 data: response?.data?.data || null,
             }
         } catch (error: unknown) {
-            let message = 'An error occurred'
             return {
                 status: false,
-                message: error instanceof Error ? error.message : message,
+                message: error instanceof Error ? error?.message : 'An error occurred',
             }
         }
     }
 
-    const patch = async (endPoint: string, data: Partial<T>) => {
+    const patch = async (endPoint: string, id: string, data?: Partial<T>) => {
         try {
-            const response = await PrivateAxiosInstance.patch(endPoint, data)
+            const response = await PrivateAxiosInstance.patch(`${endPoint}/${id}`, data)
             return {
                 status: true,
                 message: response?.data?.message || 'Updated successfully',
                 data: response?.data?.data || null,
             }
         } catch (error: unknown) {
-            let message = 'An error occurred'
-
             return {
                 status: false,
-                message: error instanceof Error ? error.message : message,
+                message: error instanceof Error ? error?.message : 'An error occurred',
             }
         }
     }
@@ -137,11 +128,9 @@ const useAPI = <T>() => {
                 message: response?.data?.message ?? 'Deleted successfully',
             }
         } catch (error: unknown) {
-            let message = 'An error occurred'
-
             return {
                 status: false,
-                message: error instanceof Error ? error.message : message,
+                message: error instanceof Error ? error?.message : 'An error occurred',
             }
         }
     }

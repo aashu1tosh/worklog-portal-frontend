@@ -29,6 +29,10 @@ export const userRoute = [
                 element: <LoginLog />,
             },
             {
+                path: 'test',
+                element: <p>Test Page</p>,
+            },
+            {
                 path: '*',
                 element: <PageNotFound />,
             },

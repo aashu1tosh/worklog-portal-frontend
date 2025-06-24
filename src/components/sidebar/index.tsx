@@ -197,8 +197,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       }`}
     >
 
-      <div className="absolute top-4 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-        {'toogle bar'}
+      <div className="absolute top-4 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
         <Button
           variant="ghost"
           size="sm"
