@@ -67,7 +67,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </>
         ) : (
           <>
-            {icon && <div className='mr-2   '>{icon}</div>}
+            {icon && <div className='mr-2'>{icon}</div>}
             {props.children}
           </>
         )}

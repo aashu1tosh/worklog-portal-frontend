@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { IPagination } from "@/interfaces/pagination.interface";
 import {
   type ColumnDef,
   flexRender,
@@ -17,11 +18,10 @@ import {
   type RowSelectionState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Loader2, Plus } from "lucide-react";
+import { Download, Loader2, Plus, RefreshCcwDot } from "lucide-react";
 import React, { type ReactNode } from "react";
 import { DataTablePagination } from "./pagination/index";
 import { DataTableSearch } from "./TableSearch";
-import type { IPagination } from "@/interfaces/pagination.interface";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -168,6 +168,22 @@ function DataTable<TData, TValue>({
 
           {/* Tools */}
           {tools && <div className="flex items-center space-x-2">{tools}</div>}
+
+
+          <Button onClick={() => {
+            setPagination({
+              ...pagination,
+              refreshTable: true,
+            })
+          }} variant="outline" className="ml-2">
+            <RefreshCcwDot className="mr-2 h-4 w-4" />
+            Refresh
+          </Button>
+
+          <Button variant="outline" className="ml-2">
+            <Download className="mr-2 h-4 w-4" />
+            Export
+          </Button>
         </div>
       </div>
 
@@ -195,9 +211,9 @@ function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -247,7 +263,6 @@ function DataTable<TData, TValue>({
           </Table>
         </div>
 
-        {/* Pagination */}
         <DataTablePagination
           pagination={pagination}
           setPagination={setPagination}
