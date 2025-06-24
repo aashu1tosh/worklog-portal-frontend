@@ -51,7 +51,7 @@ interface DataTableProps<TData, TValue> {
     enableRowSelection?: boolean
 }
 
-export function DataTable<TData, TValue>({
+function DataTable<TData, TValue>({
     columns,
     loading = false,
     data,
@@ -258,3 +258,5 @@ export function DataTable<TData, TValue>({
         </div>
     )
 }
+
+export default DataTable

@@ -5,5 +5,9 @@ export const endPoint = {
         logout: '/auth/logout',
         isAuthenticated: '/auth/is-authenticated',
         refreshToken: '/auth/public/refresh-token',
+    },
+
+    loginLog: {
+        getLoginLog: '/login-log',
     }
 }
