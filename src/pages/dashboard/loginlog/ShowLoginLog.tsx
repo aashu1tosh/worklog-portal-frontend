@@ -87,7 +87,7 @@ const ShowLoginLog = (props: IProps) => {
         <div>
           <Button
             onClick={() => {
-              openConfirmDialog(row.original.id);
+              openConfirmDialog(row.original.id as string);
             }}
             disabled={row?.original?.logOutTime ? true : false}
           >
