@@ -74,7 +74,9 @@ const AddCompany = ({ open, setOpen, selectedId }: IProps) => {
                 email: selectedValue?.email ?? '',
             })
         }
-    }, [selectedValue])
+    }, [selectedId])
+
+    console.log('selectedId', selectedId)
 
     const onSubmit = async (data: ICompany) => {
 
@@ -90,7 +92,7 @@ const AddCompany = ({ open, setOpen, selectedId }: IProps) => {
             },
             reset: () => reset(defaultValues),
             setOpen,
-            isUpdate: !!selectedValue,
+            isUpdate: !!selectedId,
         })
     }
 
