@@ -3,24 +3,23 @@ import { endPoint } from "@/constants/endPoint";
 import { DocumentTitle } from "@/functions/DocumentTitle";
 import { useDataFetch } from "@/hooks/useDataFetch";
 import usePagination from "@/hooks/usePagination";
-import type { ICompany } from "@/interfaces/company/company.interface";
-import AddCompany from "@/pages/dashboard/company/AddCompany";
-import ShowCompany from "@/pages/dashboard/company/ShowCompany";
+import type { IAdmin } from "@/interfaces/admin/admin.interface";
+import AddAdmin from "./AddAdmin";
+import ShowAdmin from "./ShowAdmin";
 
 
-const Company = () => {
-  DocumentTitle("Login Log Page");
+const Admin = () => {
+  DocumentTitle("Admin Page");
   const [pagination, setPagination] = usePagination();
 
-  const { isLoading, error, values, addOpen, setAddOpen, selectedId, setSelectedId } = useDataFetch<ICompany>({
-    endpoint: endPoint?.company?.company,
+  const { isLoading, error, values, addOpen, setAddOpen, selectedId, setSelectedId } = useDataFetch<IAdmin>({
+    endpoint: endPoint?.admin?.admin,
     pagination: { pagination, setPagination },
-    customQueryKey: [endPoint?.company?.company],
   })
 
   return (
-    <GenericWrapper title={'Companies'} error={error}>
-      <ShowCompany
+    <GenericWrapper title={'Admin'} error={error}>
+      <ShowAdmin
         loading={isLoading}
         values={values}
         pagination={pagination}
@@ -30,9 +29,9 @@ const Company = () => {
         selectedId={selectedId}
         setSelectedId={setSelectedId}
       />
-      <AddCompany open={addOpen} setOpen={setAddOpen} selectedId={selectedId} setSelectedId={setSelectedId} />
+      <AddAdmin open={addOpen} setOpen={setAddOpen} selectedId={selectedId} setSelectedId={setSelectedId} />
     </GenericWrapper>
   );
 };
 
-export default Company;
+export default Admin;

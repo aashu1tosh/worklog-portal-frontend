@@ -1,12 +1,14 @@
 import Table from "@/components/table";
 import TableAction from "@/components/table/TableAction";
-import type { ICompany } from "@/interfaces/company/company.interface";
+import { ROLE } from "@/constants/enum";
+import useAuth from "@/hooks/useAuth";
+import type { IAdmin } from "@/interfaces/admin/admin.interface";
 import type { IPagination } from "@/interfaces/pagination.interface";
 import type { ColumnDef } from "@tanstack/react-table";
 
 interface IProps {
   loading: boolean;
-  values: ICompany[] | null;
+  values: IAdmin[] | null;
   pagination: IPagination;
   setPagination: React.Dispatch<React.SetStateAction<IPagination>>;
   addOpen?: boolean;
@@ -16,25 +18,18 @@ interface IProps {
 }
 
 const ShowCompany = (props: IProps) => {
+    const {authData} = useAuth();
   const { loading, values, pagination, setPagination, setAddOpen, setSelectedId } = props;
 
-  const columns: ColumnDef<ICompany>[] = [
+  const columns: ColumnDef<IAdmin>[] = [
     {
       accessorKey: "name",
       header: "Name",
-    },
-
-    {
-      accessorKey: "address",
-      header: "Address",
-    },
-    {
-      accessorKey: "email",
-      header: "Email",
-    },
-    {
-      accessorKey: "phone",
-      header: "Phone",
+      cell: ({ row }) => (
+        <div>
+          {row.original.firstName} {row.original.middleName ? row.original.middleName + " " : ""}{row.original.lastName}
+        </div>
+      ),
     },
     {
       id: "actions",
@@ -55,7 +50,8 @@ const ShowCompany = (props: IProps) => {
         data={values ?? []}
         pagination={pagination}
         setPagination={setPagination}
-        addButtonLabel="Add New Company"
+        addButton={ROLE.SUDO_ADMIN === authData?.role} 
+        addButtonLabel="Add Admin"
         setAddOpen={setAddOpen}
       />
     </div>

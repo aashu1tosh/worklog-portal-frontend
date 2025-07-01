@@ -18,7 +18,6 @@ import { useLocation, useNavigate } from "react-router";
 import useAuth from "@/hooks/useAuth";
 import { ROLE } from "@/constants/enum";
 
-
 interface MenuItem {
   icon?: ReactNode;
   title: string;
@@ -44,10 +43,16 @@ const menuItems: MenuItem[] = [
     title: "Login Log",
     url: "/dashboard/login-log",
   },
-    {
+  {
     icon: <Shield size={18} />,
     title: "Company",
     url: "/dashboard/company",
+    roles: [ROLE.ADMIN, ROLE.SUDO_ADMIN],
+  },
+  {
+    icon: <Shield size={18} />,
+    title: "Company",
+    url: "/dashboard/admin",
     roles: [ROLE.ADMIN, ROLE.SUDO_ADMIN],
   },
   {
@@ -76,8 +81,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const navigate = useNavigate();
   const pathname = useLocation();
-  const {authData} = useAuth();
-  const userRole = authData?.role
+  const { authData } = useAuth();
+  const userRole = authData?.role;
 
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const [collapsed, setCollapsed] = useState<boolean>(isCollapsed);
@@ -204,7 +209,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         collapsed ? "w-16" : "w-64"
       }`}
     >
-
       <div className="absolute top-4 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
         <Button
           variant="ghost"
