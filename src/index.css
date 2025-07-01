@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   /* Base color palette in light mode */
   :root {
     /* Background and Foreground Colors */
@@ -27,24 +26,17 @@
     --popover-foreground: 0 0% 3.9%;
     /* Dark popover text color */
 
-    /* Primary and Secondary Colors */
-    --primary: 0 0% 9%;
-    /* New Primary color: #b8322c */
-    --primary-foreground: 0 0% 98%;
-    /* Text color for primary (usually light for dark primary) */
-    --primary-light: hsl(3, 61%, 65%);
-    /* Lighter variant of primary */
-    --primary-dark: hsl(3, 61%, 30%);
-    /* Darker variant of primary */
+    /* Primary - Olive Green */
+    --primary: 108 10% 50%; /* #748873 */
+    --primary-foreground: 0 0% 98%; /* Almost white text */
+    --primary-light: hsl(108, 10%, 70%);
+    --primary-dark: hsl(108, 10%, 30%);
 
-    --secondary: 0 0% 96.1%;
-    /* Secondary color (unchanged, but consider if it should complement new primary) */
-    --secondary-foreground: 0 0% 9%;
-    /* Text color for secondary */
-    --secondary-light: hsl(198, 41%, 97%);
-    /* Lighter variant of secondary */
-    --secondary-dark: hsl(198, 41%, 70%);
-    /* Darker variant of secondary */
+    /* Secondary - Lavender (complementary to olive) */
+    --secondary: 280 15% 85%;
+    --secondary-foreground: 0 0% 10%;
+    --secondary-light: hsl(280, 15%, 95%);
+    --secondary-dark: hsl(280, 15%, 60%);
 
     /* Muted and Accent Colors */
     --muted: 0 0% 96.1%;
@@ -128,8 +120,6 @@
     --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {
