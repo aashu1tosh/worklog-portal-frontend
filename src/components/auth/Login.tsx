@@ -45,6 +45,7 @@ const Login = () => {
 
     const loginFn = async (data: { email: string; password: string; }) => {
         const response = await post(endPoint?.auth?.login, data)
+        console.log("🚀 ~ loginFn ~ response:", response)
         if (!response?.status) throw new Error(response?.message)
         return response
     }
@@ -66,9 +67,9 @@ const Login = () => {
                 description: res?.message || 'Login successful',
             })
             reset(defaultValues)
-        } catch (error: unknown) {
+        } catch (error: any) {
             toast.error('Login Failed', {
-                description: error instanceof Error ? error?.message : 'Something went wrong',
+                description: error?.message ?? 'Something went wrong',
             })
         }
     }

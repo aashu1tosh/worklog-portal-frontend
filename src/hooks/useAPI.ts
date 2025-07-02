@@ -82,7 +82,7 @@ const useAPI = <T>() => {
       return {
         status: false,
         data: null,
-        message: error instanceof Error ? error?.message : "An error occurred",
+        message: error?.response?.data?.message ?? "An error occurred",
       };
     }
   };
@@ -98,7 +98,7 @@ const useAPI = <T>() => {
     } catch (error: any) {
       return {
         status: false,
-        message: error instanceof Error ? error?.message : "An error occurred",
+        message: error?.response?.data?.message ?? "An error occurred",
         errors: error?.response?.data?.errors || null,
       };
     }
