@@ -90,50 +90,52 @@
     /* Background - Deep olive-tinted dark */
     --background: 108 15% 8%; /* Deep olive background */
     --foreground: 60 20% 95%; /* Warm light text */
-    
+
     /* Cards and Popovers */
     --card: 108 12% 12%; /* Slightly lighter olive-dark */
     --card-foreground: 60 20% 95%;
     --popover: 108 10% 10%; /* Deeper for layering */
     --popover-foreground: 60 20% 95%;
-    
+
     /* Primary - Brighter olive for dark background */
     --primary: 108 30% 65%; /* Lighter, more saturated olive */
     --primary-foreground: 108 15% 8%; /* Dark background for contrast */
-    
+
     /* Secondary - Dark sage */
     --secondary: 108 8% 18%; /* Dark olive-gray */
     --secondary-foreground: 85 25% 85%; /* Light sage text */
-    
+
     /* Muted - Olive-tinted dark grays */
     --muted: 108 6% 20%; /* Muted olive background */
     --muted-foreground: 85 15% 70%; /* Sage-tinted text */
-    
+
     /* Accent - Warm golden glow for dark mode */
     --accent: 45 25% 25%; /* Deep golden background */
     --accent-foreground: 45 80% 85%; /* Bright golden text */
-    
+
     /* Destructive - Softer red for dark mode */
     --destructive: 355 65% 55%; /* Muted red */
     --destructive-foreground: 60 20% 95%;
-    
+
     /* Success - Bright forest green */
     --success: 125 40% 55%; /* Brighter forest green */
     --success-foreground: 108 15% 8%;
-    
+
     /* Warning - Glowing amber */
     --warning: 38 85% 70%; /* Bright amber */
     --warning-foreground: 108 15% 8%;
-    
+
     /* Info - Bright teal */
     --info: 185 35% 65%; /* Brighter teal */
     --info-foreground: 108 15% 8%;
-    
+
     /* Borders and inputs - Subtle olive tints */
-    --border: 108 8% 25%; /* Subtle olive border */
+    --border: 0 0% 100%;
+    /* Subtle olive border */
+    /* --border: 108 8% 25%;  */
     --input: 108 6% 22%; /* Input backgrounds */
     --ring: 108 45% 65%; /* Bright olive focus ring */
-    
+
     /* Enhanced chart colors for dark mode */
     --chart-1: 108 40% 65%; /* Bright olive */
     --chart-2: 185 40% 65%; /* Bright teal */
@@ -145,30 +147,70 @@
 
 /* Additional semantic color utilities */
 @layer utilities {
-  .bg-success { background-color: hsl(var(--success)); }
-  .bg-success-light { background-color: hsl(var(--success-light)); }
-  .bg-success-dark { background-color: hsl(var(--success-dark)); }
-  .text-success { color: hsl(var(--success)); }
-  .text-success-foreground { color: hsl(var(--success-foreground)); }
-  
-  .bg-warning { background-color: hsl(var(--warning)); }
-  .bg-warning-light { background-color: hsl(var(--warning-light)); }
-  .bg-warning-dark { background-color: hsl(var(--warning-dark)); }
-  .text-warning { color: hsl(var(--warning)); }
-  .text-warning-foreground { color: hsl(var(--warning-foreground)); }
-  
-  .bg-info { background-color: hsl(var(--info)); }
-  .bg-info-light { background-color: hsl(var(--info-light)); }
-  .bg-info-dark { background-color: hsl(var(--info-dark)); }
-  .text-info { color: hsl(var(--info)); }
-  .text-info-foreground { color: hsl(var(--info-foreground)); }
-  
-  .bg-complementary { background-color: hsl(var(--complementary)); }
-  .text-complementary { color: hsl(var(--complementary)); }
-  
-  .border-success { border-color: hsl(var(--success)); }
-  .border-warning { border-color: hsl(var(--warning)); }
-  .border-info { border-color: hsl(var(--info)); }
+  .bg-success {
+    background-color: hsl(var(--success));
+  }
+  .bg-success-light {
+    background-color: hsl(var(--success-light));
+  }
+  .bg-success-dark {
+    background-color: hsl(var(--success-dark));
+  }
+  .text-success {
+    color: hsl(var(--success));
+  }
+  .text-success-foreground {
+    color: hsl(var(--success-foreground));
+  }
+
+  .bg-warning {
+    background-color: hsl(var(--warning));
+  }
+  .bg-warning-light {
+    background-color: hsl(var(--warning-light));
+  }
+  .bg-warning-dark {
+    background-color: hsl(var(--warning-dark));
+  }
+  .text-warning {
+    color: hsl(var(--warning));
+  }
+  .text-warning-foreground {
+    color: hsl(var(--warning-foreground));
+  }
+
+  .bg-info {
+    background-color: hsl(var(--info));
+  }
+  .bg-info-light {
+    background-color: hsl(var(--info-light));
+  }
+  .bg-info-dark {
+    background-color: hsl(var(--info-dark));
+  }
+  .text-info {
+    color: hsl(var(--info));
+  }
+  .text-info-foreground {
+    color: hsl(var(--info-foreground));
+  }
+
+  .bg-complementary {
+    background-color: hsl(var(--complementary));
+  }
+  .text-complementary {
+    color: hsl(var(--complementary));
+  }
+
+  .border-success {
+    border-color: hsl(var(--success));
+  }
+  .border-warning {
+    border-color: hsl(var(--warning));
+  }
+  .border-info {
+    border-color: hsl(var(--info));
+  }
 }
 
 @layer base {
