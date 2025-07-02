@@ -30,7 +30,7 @@ PrivateAxiosInstance.interceptors.response.use(
 
         if (
             error.response &&
-            error.response.status === 401 &&
+            // error.response.status === 401 &&      THIS SHOULD BE SOLVE FOR TIME BEING
             error?.response?.data?.message === 'TOKEN_EXPIRED' &&
             !originalRequest._retry
         ) {
