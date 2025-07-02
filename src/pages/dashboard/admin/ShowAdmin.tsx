@@ -1,6 +1,6 @@
 import Table from "@/components/table";
 import TableAction from "@/components/table/TableAction";
-import { ROLE } from "@/constants/enum";
+import { Role } from "@/constants/enum";
 import useAuth from "@/hooks/useAuth";
 import type { IAdmin } from "@/interfaces/admin/admin.interface";
 import type { IPagination } from "@/interfaces/pagination.interface";
@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const ShowCompany = (props: IProps) => {
-    const {authData} = useAuth();
+  const { authData } = useAuth();
   const { loading, values, pagination, setPagination, setAddOpen, setSelectedId } = props;
 
   const columns: ColumnDef<IAdmin>[] = [
@@ -28,6 +28,24 @@ const ShowCompany = (props: IProps) => {
       cell: ({ row }) => (
         <div>
           {row.original.firstName} {row.original.middleName ? row.original.middleName + " " : ""}{row.original.lastName}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "email",
+      header: "email",
+      cell: ({ row }) => (
+        <div>
+          {row.original.auth?.email}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "role",
+      header: "Role",
+      cell: ({ row }) => (
+        <div>
+          {row.original.auth?.role?.replace(/_/g, " ")}
         </div>
       ),
     },
@@ -50,7 +68,7 @@ const ShowCompany = (props: IProps) => {
         data={values ?? []}
         pagination={pagination}
         setPagination={setPagination}
-        addButton={ROLE.SUDO_ADMIN === authData?.role} 
+        addButton={Role.SUDO_ADMIN === authData?.role}
         addButtonLabel="Add Admin"
         setAddOpen={setAddOpen}
       />

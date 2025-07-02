@@ -54,7 +54,6 @@ const Navbar = () => {
 
   const handleLogoutConfirmation = () => {
     setLogoutConfirmation(true);
-
   };
 
   const handleCloseLogoutConfirmation = () => {
@@ -63,20 +62,24 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="h-14 bg-white dark:bg-dark-dark border-b border-gray-200 dark:border-gray-800 px-4 flex items-center justify-between">
+      <nav className="h-14 bg-card border-b border-border px-4 flex items-center justify-between">
         {/* Left Section */}
         <div className="flex items-center gap-4">
           {/* Mobile Menu Button */}
-          <Button variant="ghost" size="sm" className="lg:hidden">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="lg:hidden hover:bg-secondary text-muted-foreground hover:text-secondary-foreground"
+          >
             <Menu className="h-5 w-5" />
           </Button>
 
           {/* Logo/Brand */}
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AP</span>
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-sm">AP</span>
             </div>
-            <span className="font-semibold text-gray-900 dark:text-white hidden sm:block">
+            <span className="font-semibold text-foreground hidden sm:block">
               Dashboard
             </span>
           </div>
@@ -85,11 +88,11 @@ const Navbar = () => {
         {/* Center Section - Search */}
         <div className="flex-1 max-w-md mx-4 hidden md:block">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               type="text"
               placeholder="Search..."
-              className="pl-10 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+              className="pl-10 bg-input border-border text-foreground placeholder:text-muted-foreground focus:ring-primary"
             />
           </div>
         </div>
@@ -97,7 +100,11 @@ const Navbar = () => {
         {/* Right Section */}
         <div className="flex items-center gap-2">
           {/* Search Button (Mobile) */}
-          <Button variant="ghost" size="sm" className="md:hidden">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden hover:bg-secondary text-muted-foreground hover:text-secondary-foreground"
+          >
             <Search className="h-5 w-5" />
           </Button>
 
@@ -106,7 +113,7 @@ const Navbar = () => {
             variant="ghost"
             size="sm"
             onClick={changeTheme}
-            className="hidden sm:flex"
+            className="hidden sm:flex hover:bg-secondary text-muted-foreground hover:text-secondary-foreground"
           >
             {theme === "dark" ? (
               <Sun className="h-5 w-5" />
@@ -118,7 +125,11 @@ const Navbar = () => {
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="relative">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="relative hover:bg-secondary text-muted-foreground hover:text-secondary-foreground"
+              >
                 <Bell className="h-5 w-5" />
                 {notifications > 0 && (
                   <Badge
@@ -130,34 +141,34 @@ const Navbar = () => {
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80">
-              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+            <DropdownMenuContent align="end" className="w-80 bg-popover border-border">
+              <DropdownMenuLabel className="text-popover-foreground">Notifications</DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-border" />
               <div className="space-y-2 p-2">
-                <div className="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md cursor-pointer">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                <div className="flex items-start gap-3 p-2 hover:bg-secondary rounded-md cursor-pointer">
+                  <div className="w-2 h-2 bg-info rounded-full mt-2"></div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium">Mock Notification</p>
-                    <p className="text-xs text-gray-500">2 minutes ago</p>
+                    <p className="text-sm font-medium text-popover-foreground">Mock Notification</p>
+                    <p className="text-xs text-muted-foreground">2 minutes ago</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md cursor-pointer">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                <div className="flex items-start gap-3 p-2 hover:bg-secondary rounded-md cursor-pointer">
+                  <div className="w-2 h-2 bg-success rounded-full mt-2"></div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium">In progress of building notification</p>
-                    <p className="text-xs text-gray-500">1 hour ago</p>
+                    <p className="text-sm font-medium text-popover-foreground">In progress of building notification</p>
+                    <p className="text-xs text-muted-foreground">1 hour ago</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md cursor-pointer">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+                <div className="flex items-start gap-3 p-2 hover:bg-secondary rounded-md cursor-pointer">
+                  <div className="w-2 h-2 bg-warning rounded-full mt-2"></div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium">Server maintenance</p>
-                    <p className="text-xs text-gray-500">3 hours ago</p>
+                    <p className="text-sm font-medium text-popover-foreground">Server maintenance</p>
+                    <p className="text-xs text-muted-foreground">3 hours ago</p>
                   </div>
                 </div>
               </div>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-center justify-center hover:cursor-pointer text-blue-600 dark:text-blue-400">
+              <DropdownMenuSeparator className="bg-border" />
+              <DropdownMenuItem className="text-center justify-center cursor-pointer text-primary hover:bg-secondary">
                 View all notifications
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -168,41 +179,48 @@ const Navbar = () => {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex items-center gap-2 h-auto p-2"
+                className="flex items-center gap-2 h-auto p-2 hover:bg-secondary text-foreground"
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="" alt="User" />
-                  <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-600 text-white uppercase">
+                  <AvatarFallback className="bg-primary text-primary-foreground uppercase">
                     {authData?.admin?.firstName?.[0]}
                     {authData?.admin?.lastName?.[0]}
                   </AvatarFallback>
                 </Avatar>
                 <div className="hidden md:block text-left">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  <p className="text-sm font-medium text-foreground">
                     {authData?.admin?.firstName} {authData?.admin?.lastName}
                   </p>
-                  <p className="text-xs text-gray-500">{authData?.email}</p>
+                  <p className="text-xs text-muted-foreground">{authData?.email}</p>
                 </div>
-                <ChevronDown className="h-4 w-4 text-gray-500 hidden md:block" />
+                <ChevronDown className="h-4 w-4 text-muted-foreground hidden md:block" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-56 bg-popover border-border">
+              <DropdownMenuLabel className="text-popover-foreground">My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-border" />
+              <DropdownMenuItem className="text-popover-foreground hover:bg-secondary cursor-pointer">
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="text-popover-foreground hover:bg-secondary cursor-pointer">
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="md:hidden">
-                <Moon className="mr-2 h-4 w-4" />
+              <DropdownMenuItem className="md:hidden text-popover-foreground hover:bg-secondary cursor-pointer" onClick={changeTheme}>
+                {theme === "dark" ? (
+                  <Sun className="mr-2 h-4 w-4" />
+                ) : (
+                  <Moon className="mr-2 h-4 w-4" />
+                )}
                 <span>Toggle theme</span>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600 dark:text-red-400 cursor-pointer" onClick={handleLogoutConfirmation}>
+              <DropdownMenuSeparator className="bg-border" />
+              <DropdownMenuItem
+                className="text-destructive hover:bg-secondary cursor-pointer focus:text-destructive"
+                onClick={handleLogoutConfirmation}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>

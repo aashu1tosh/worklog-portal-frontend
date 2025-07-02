@@ -4,4 +4,5 @@ export interface IAdmin extends IBaseInterface {
   firstName: string;
   lastName: string;
   middleName?: string;
+  auth?: any
 }
