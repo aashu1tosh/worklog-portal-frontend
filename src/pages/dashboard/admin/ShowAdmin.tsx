@@ -52,9 +52,9 @@ const ShowCompany = (props: IProps) => {
     {
       id: "actions",
       header: () => <div className="text-center">Actions</div>,
-      cell: ({ row }) => (
+      cell: () => (
         <TableAction
-          onEdit={() => setSelectedId && setSelectedId(row?.original?.id as string)}
+          disableUpdate
         />
       ),
     },

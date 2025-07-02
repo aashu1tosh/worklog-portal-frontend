@@ -42,6 +42,8 @@ export function useDataFetch<T>({
       return response.data
     },
     enabled: queryEnabled,
+    placeholderData: (previousData) =>
+      pagination.refreshTable ? undefined : previousData,
   })
 
   useEffect(() => {
@@ -57,6 +59,10 @@ export function useDataFetch<T>({
       })
     }
   }, [data])
+
+  useEffect(() => {
+    console.log('useDataFetch: pagination.refreshTable changed:', pagination.refreshTable)
+  }, [pagination.refreshTable])
 
   useEffect(() => {
     if (selectedId) setAddOpen(true)
