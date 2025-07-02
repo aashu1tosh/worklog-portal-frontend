@@ -1,12 +1,3 @@
-import { useState, type ReactNode } from "react";
-import {
-  Home,
-  Settings,
-  Shield,
-  ChevronDown,
-  ChevronRight,
-  Menu,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,
@@ -14,9 +5,18 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useLocation, useNavigate } from "react-router";
-import useAuth from "@/hooks/useAuth";
 import { ROLE } from "@/constants/enum";
+import useAuth from "@/hooks/useAuth";
+import {
+  ChevronDown,
+  ChevronRight,
+  Home,
+  Menu,
+  Settings,
+  Shield,
+} from "lucide-react";
+import { useState, type ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router";
 
 interface MenuItem {
   icon?: ReactNode;
@@ -51,7 +51,7 @@ const menuItems: MenuItem[] = [
   },
   {
     icon: <Shield size={18} />,
-    title: "Company",
+    title: "Admin Dashboard",
     url: "/dashboard/admin",
     roles: [ROLE.ADMIN, ROLE.SUDO_ADMIN],
   },
@@ -168,7 +168,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
     return (
       <Button
-        key={item.title}
+        key={item?.url}
         variant="ghost"
         className={`w-full h-10 px-3 ${
           isChild
