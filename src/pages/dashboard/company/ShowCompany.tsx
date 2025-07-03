@@ -50,7 +50,7 @@ const ShowCompany = (props: IProps) => {
       id: "actions",
       header: () => <div className="text-center">Actions</div>,
       cell: ({ row }) => (
-        <div className="flex gap-2">
+        <div className="flex items-center justify-center gap-2">
           <div
             onClick={() => {
               navigate(`/dashboard/company-admin/${row.original?.id as string}`);
