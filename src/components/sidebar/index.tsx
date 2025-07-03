@@ -32,57 +32,12 @@ interface SidebarProps {
   isCollapsed?: boolean;
 }
 
-const menuItems: MenuItem[] = [
-  {
-    icon: <Home size={18} />,
-    title: "Dashboard",
-    url: "/dashboard/home",
-  },
-  {
-    icon: <Shield size={18} />,
-    title: "Login Log",
-    url: "/dashboard/login-log",
-  },
-  {
-    icon: <Shield size={18} />,
-    title: "Company",
-    url: "/dashboard/company",
-    roles: [Role.ADMIN, Role.SUDO_ADMIN],
-  },
-  {
-    icon: <Shield size={18} />,
-    title: "Admin Dashboard",
-    url: "/dashboard/admin",
-    roles: [Role.ADMIN, Role.SUDO_ADMIN],
-  },
-  {
-    icon: <Settings size={18} />,
-    title: "Settings",
-    children: [
-      {
-        title: "General",
-        url: "/dashboard/settings/general",
-      },
-      {
-        title: "Security",
-        url: "/dashboard/settings/security",
-      },
-      {
-        title: "Version Control",
-        url: "/dashboard/settings/maintain-version",
-      },
-    ],
-  },
-];
-
-const Sidebar: React.FC<SidebarProps> = ({
-  items = menuItems,
-  isCollapsed = false,
-}) => {
+const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
   const navigate = useNavigate();
   const pathname = useLocation();
   const { authData } = useAuth();
   const userRole = authData?.role;
+  const companyID = authData?.companyAdmin?.company?.id;
 
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const [collapsed, setCollapsed] = useState<boolean>(isCollapsed);
@@ -118,6 +73,54 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   };
 
+  const items: MenuItem[] = [
+    {
+      icon: <Home size={18} />,
+      title: "Dashboard",
+      url: "/dashboard/home",
+    },
+    {
+      icon: <Shield size={18} />,
+      title: "Login Log",
+      url: "/dashboard/login-log",
+    },
+    {
+      icon: <Shield size={18} />,
+      title: "Company",
+      url: "/dashboard/company",
+      roles: [Role.ADMIN, Role.SUDO_ADMIN],
+    },
+    {
+      icon: <Shield size={18} />,
+      title: "Admin Dashboard",
+      url: "/dashboard/admin",
+      roles: [Role.ADMIN, Role.SUDO_ADMIN],
+    },
+    {
+      icon: <Shield size={18} />,
+      title: "Admin Dashboard",
+      url: `/dashboard/company-admin/${companyID}`,
+      roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
+    },
+    {
+      icon: <Settings size={18} />,
+      title: "Settings",
+      children: [
+        {
+          title: "General",
+          url: "/dashboard/settings/general",
+        },
+        {
+          title: "Security",
+          url: "/dashboard/settings/security",
+        },
+        {
+          title: "Version Control",
+          url: "/dashboard/settings/maintain-version",
+        },
+      ],
+    },
+  ];
   // Render menu item
   const renderMenuItem = (
     item: MenuItem,
@@ -139,12 +142,13 @@ const Sidebar: React.FC<SidebarProps> = ({
           <CollapsibleTrigger asChild>
             <Button
               variant="ghost"
-              className={`w-full h-10 px-3 ${isChild
-                ? "pl-8 justify-start gap-3"
-                : collapsed
+              className={`w-full h-10 px-3 ${
+                isChild
+                  ? "pl-8 justify-start gap-3"
+                  : collapsed
                   ? "justify-center px-0"
                   : "justify-start gap-3"
-                } hover:bg-secondary text-secondary-foreground transition-colors`}
+              } hover:bg-secondary text-secondary-foreground transition-colors`}
               onClick={() => handleItemClick(undefined, item?.title)}
             >
               {!isChild && (
@@ -158,9 +162,15 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {item?.title}
                   </span>
                   {isOpen ? (
-                    <ChevronDown size={16} className="text-muted-foreground flex-shrink-0" />
+                    <ChevronDown
+                      size={16}
+                      className="text-muted-foreground flex-shrink-0"
+                    />
                   ) : (
-                    <ChevronRight size={16} className="text-muted-foreground flex-shrink-0" />
+                    <ChevronRight
+                      size={16}
+                      className="text-muted-foreground flex-shrink-0"
+                    />
                   )}
                 </>
               )}
@@ -179,23 +189,24 @@ const Sidebar: React.FC<SidebarProps> = ({
       <Button
         key={item?.url}
         variant="ghost"
-        className={`w-full h-10 px-3 ${isChild
-          ? "pl-8 justify-start gap-3"
-          : collapsed
+        className={`w-full h-10 px-3 ${
+          isChild
+            ? "pl-8 justify-start gap-3"
+            : collapsed
             ? "justify-center px-0"
             : "justify-start gap-3"
-          } ${isActive
+        } ${
+          isActive
             ? "bg-primary text-primary-foreground border-r-2 border-primary"
             : "hover:bg-secondary text-secondary-foreground"
-          } transition-colors`}
+        } transition-colors`}
         onClick={() => handleItemClick(item?.url, item?.title)}
       >
         {!isChild && (
           <span
-            className={`flex-shrink-0 ${isActive
-              ? "text-primary-foreground"
-              : "text-muted-foreground"
-              }`}
+            className={`flex-shrink-0 ${
+              isActive ? "text-primary-foreground" : "text-muted-foreground"
+            }`}
           >
             {item.icon}
           </span>
@@ -211,12 +222,16 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div
-      className={`group h-full bg-card border-r border-border transition-all duration-300 ${collapsed ? "w-16" : "w-64"
-        } relative`}
+      className={`group h-full bg-card border-r border-border transition-all duration-300 ${
+        collapsed ? "w-16" : "w-64"
+      } relative`}
     >
       {/* Header with Toggle Button */}
-      <div className={`flex items-center justify-between p-3 border-b border-border ${collapsed ? "justify-center" : ""
-        }`}>
+      <div
+        className={`flex items-center justify-between p-3 border-b border-border ${
+          collapsed ? "justify-center" : ""
+        }`}
+      >
         {!collapsed && (
           <h2 className="text-lg font-semibold text-foreground">Menu</h2>
         )}
@@ -224,8 +239,9 @@ const Sidebar: React.FC<SidebarProps> = ({
           variant="ghost"
           size="sm"
           onClick={toggleSidebar}
-          className={`h-8 w-8 p-0 hover:bg-secondary flex-shrink-0 ${collapsed ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-            } transition-opacity duration-200`}
+          className={`h-8 w-8 p-0 hover:bg-secondary flex-shrink-0 ${
+            collapsed ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+          } transition-opacity duration-200`}
         >
           <Menu size={16} className="text-muted-foreground" />
         </Button>
