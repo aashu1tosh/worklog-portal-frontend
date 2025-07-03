@@ -13,6 +13,7 @@ export const endPoint = {
 
     company: {
         company: '/company',
+        companyAdmin: '/company-admin',
     },
     
     loginLog: {

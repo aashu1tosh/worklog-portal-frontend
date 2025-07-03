@@ -99,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
     {
       icon: <Shield size={18} />,
       title: "Admin Dashboard",
-      url: `/dashboard/company-admin/${companyID}`,
+      url: `/dashboard/company-admin-management/${companyID}`,
       roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
     },
     {

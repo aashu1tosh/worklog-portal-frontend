@@ -5,22 +5,32 @@ import { useDataFetch } from "@/hooks/useDataFetch";
 import usePagination from "@/hooks/usePagination";
 import type { ICompany } from "@/interfaces/company/company.interface";
 import AddCompany from "@/pages/dashboard/company/AddCompany";
-import ShowCompany from "@/pages/dashboard/company/ShowCompany";
+import { useParams } from "react-router-dom";
+import ShowCompanyAdmin from "./ShowCompanyAdmin";
 
+const CompanyAdmin = () => {
+  DocumentTitle("Company Admin Management Page");
+  const { id } = useParams();
 
-const Company = () => {
-  DocumentTitle("Company Page");
   const [pagination, setPagination] = usePagination();
 
-  const { isLoading, error, values, addOpen, setAddOpen, selectedId, setSelectedId } = useDataFetch<ICompany>({
-    endpoint: endPoint?.company?.company,
+  const {
+    isLoading,
+    error,
+    values,
+    addOpen,
+    setAddOpen,
+    selectedId,
+    setSelectedId,
+  } = useDataFetch<ICompany>({
+    endpoint: endPoint?.company?.companyAdmin + `/${id}`,
     pagination: { pagination, setPagination },
     customQueryKey: [endPoint?.company?.company],
-  })
+  });
 
   return (
-    <GenericWrapper title={'Companies'} error={error}>
-      <ShowCompany
+    <GenericWrapper title={"Company Admins"} error={error}>
+      <ShowCompanyAdmin
         loading={isLoading}
         values={values}
         pagination={pagination}
@@ -30,9 +40,14 @@ const Company = () => {
         selectedId={selectedId}
         setSelectedId={setSelectedId}
       />
-      <AddCompany open={addOpen} setOpen={setAddOpen} selectedId={selectedId} setSelectedId={setSelectedId} />
+      <AddCompany
+        open={addOpen}
+        setOpen={setAddOpen}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+      />
     </GenericWrapper>
   );
 };
 
-export default Company;
+export default CompanyAdmin;

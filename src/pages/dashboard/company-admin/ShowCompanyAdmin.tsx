@@ -18,7 +18,7 @@ interface IProps {
   setSelectedId?: (data: string | null) => void;
 }
 
-const ShowCompany = (props: IProps) => {
+const ShowCompanyAdmin = (props: IProps) => {
   const {
     loading,
     values,
@@ -53,7 +53,7 @@ const ShowCompany = (props: IProps) => {
         <div className="flex items-center justify-center gap-2">
           <div
             onClick={() => {
-              navigate(`/dashboard/company-admin-management/${row.original?.id as string}`);
+              navigate(`/dashboard/company-admin/${row.original?.id as string}`);
             }}
             className="bg-indigo-500 dark:bg-transparent dark:border-[1px] dark:border-indigo-500 px-[7px] py-[4px] rounded-[4px] hover:bg-indigo-700 cursor-pointer transition-all duration-200"
           >
@@ -85,4 +85,4 @@ const ShowCompany = (props: IProps) => {
   );
 };
 
-export default ShowCompany;
+export default ShowCompanyAdmin;

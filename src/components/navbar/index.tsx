@@ -43,7 +43,6 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    console.log("User logged out");
     await post('/auth/logout', {});
     setIsAuthorized(false);
     setAuthData(null);
