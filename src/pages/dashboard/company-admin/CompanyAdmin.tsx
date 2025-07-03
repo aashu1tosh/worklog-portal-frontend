@@ -25,7 +25,6 @@ const CompanyAdmin = () => {
   } = useDataFetch<ICompany>({
     endpoint: endPoint?.company?.companyAdmin + `/${id}`,
     pagination: { pagination, setPagination },
-    customQueryKey: [endPoint?.company?.company],
   });
 
   return (
