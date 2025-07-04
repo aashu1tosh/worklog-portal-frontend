@@ -119,6 +119,7 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
             setValue("role", value as Role);
             if(value) void trigger("role");
           }}
+          hideOptions={[Role.SUDO_ADMIN, Role.ADMIN, Role.COMPANY_EMPLOYEE]}
           options={Role}
           required
           placeholder="Select a role"
