@@ -12,7 +12,7 @@ import { handleFormSubmission } from "@/functions/formSubmission";
 import useApiMutation from "@/hooks/useAPIMutation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Lock, Phone, User } from "lucide-react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { IoMailOutline } from "react-icons/io5";
 
 interface IProps {
@@ -51,7 +51,7 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
     defaultValues,
   });
 
-  const onSubmit: SubmitHandler<ICompanyAdminForm> = async (data: ICompanyAdminForm) => {
+  const onSubmit = async (data: ICompanyAdminForm) => {
     const payload = {
       firstName: data.firstName,
       middleName: data.middleName,

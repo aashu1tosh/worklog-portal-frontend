@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 
 export const companyAdminSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
-    middleName: Yup.string().optional(),
     lastName: Yup.string().required('Last name is required'),
     role: Yup.mixed<Role>()
         .oneOf(Object.values(Role), 'Invalid role')
@@ -23,4 +22,13 @@ export const companyAdminSchema = Yup.object().shape({
         .required('Confirm password is required'),
 });
 
-export type ICompanyAdminForm = Yup.InferType<typeof companyAdminSchema>;
+export type ICompanyAdminForm = {
+    firstName: string;
+    middleName?: string | undefined | null;
+    lastName: string;
+    role: Role;
+    phone: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
