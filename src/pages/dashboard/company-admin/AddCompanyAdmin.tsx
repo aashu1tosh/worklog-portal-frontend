@@ -3,8 +3,8 @@ import GenericSelect from "@/components/select/GenericSelect";
 import { SubmitButton } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    companyAdminSchema,
-    type ICompanyAdminForm,
+  companyAdminSchema,
+  type ICompanyAdminForm,
 } from "@/configs/schemas/company/companyAdmin.schema";
 import { endPoint } from "@/constants/endPoint";
 import { Role } from "@/constants/enum";
@@ -33,6 +33,7 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
     middleName: null,
     lastName: "",
     phone: "",
+    role: Role.COMPANY_ADMIN,
     email: "",
     password: "",
     confirmPassword: "",
@@ -112,14 +113,15 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
         <GenericSelect
           label={'Role'}
           value={watch("role")}
-          error={errors.role}
+          className="z-999"
+          error={errors?.role}
           handleChange={async (value) => {
             setValue("role", value as Role);
-            void trigger("role");
+            if(value) void trigger("role");
           }}
           options={Role}
           required
-          placeholder="Select reason"
+          placeholder="Select a role"
         />
         <Input
           label={"Contact Number"}

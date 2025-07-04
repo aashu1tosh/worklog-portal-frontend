@@ -71,7 +71,7 @@ const GenericSelect = <T extends Record<string, string | number>>({
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className='z-[999]'>
           {showAll && (
             <SelectItem
               key={'ALL'}
@@ -91,6 +91,7 @@ const GenericSelect = <T extends Record<string, string | number>>({
           )}
           {Object.values(options).map((option: any) => {
             if (hideOptions.includes(option)) return null
+            console.log('option', option)
             return (
               <SelectItem
                 key={option}
@@ -104,7 +105,7 @@ const GenericSelect = <T extends Record<string, string | number>>({
                       }
                     : {}
                 }
-              >
+              > 
                 <span className='whitespace-nowrap'>{option?.replace(/_/g, ' ')}</span>
               </SelectItem>
             )

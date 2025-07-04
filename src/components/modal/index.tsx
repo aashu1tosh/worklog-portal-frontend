@@ -85,10 +85,10 @@ const Modal = ({
   };
 
   return createPortal(
-    <div className="fixed inset-0 modal z-[999] flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 modal z-[99] flex items-center justify-center bg-black bg-opacity-50">
       <div
         ref={closeOnOutsideClick ? modalRef : null}
-        className={`bg-white  dark:bg-dark-foreground  dark:border dark:border-gray-700 dark:text-slate-300 rounded-[4px] shadow-lg ${getModalSizeClasses(
+        className={`bg-background  dark:bg-dark-foreground  dark:border dark:border-gray-700 dark:text-slate-300 rounded-[4px] shadow-lg ${getModalSizeClasses(
           size
         )}  py-4 pl-4`}
       >
