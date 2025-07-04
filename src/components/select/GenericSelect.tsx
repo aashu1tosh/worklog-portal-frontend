@@ -48,15 +48,15 @@ const GenericSelect = <T extends Record<string, string | number>>({
     const errorClass = error
       ? 'border-red-500'
       : 'border-gray-300 hover:border-gray-400 focus:border-gray-400 data-[state=open]:border-gray-400'
-    
+
     if (variant === 'SECONDARY') {
       return 'border-none bg-transparent dark:bg-transparent p-0 text-[13px]'
     }
-    
+
     if (variant === 'PRIMARY' && colors) {
       return `${baseClasses} ${errorClass} border-none p-0`
     }
-    
+
     return `${baseClasses} ${errorClass} text-[13px] ${className || ''}`
   }
 
@@ -76,12 +76,12 @@ const GenericSelect = <T extends Record<string, string | number>>({
           style={
             variant === 'PRIMARY' && colors
               ? {
-                  color: colors[value as T[keyof T]] ?? '#b02004',
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  padding: '0px',
-                  borderRadius: rounded === 'lg' ? '1rem' : '0',
-                }
+                color: colors[value as T[keyof T]] ?? '#b02004',
+                backgroundColor: 'transparent',
+                border: 'none',
+                padding: '0px',
+                borderRadius: rounded === 'lg' ? '1rem' : '0',
+              }
               : {}
           }
         >
@@ -96,9 +96,9 @@ const GenericSelect = <T extends Record<string, string | number>>({
               style={
                 variant === 'PRIMARY' && colors
                   ? {
-                      backgroundColor: '#b02004',
-                      color: 'white',
-                    }
+                    backgroundColor: '#b02004',
+                    color: 'white',
+                  }
                   : {}
               }
             >
@@ -107,7 +107,6 @@ const GenericSelect = <T extends Record<string, string | number>>({
           )}
           {Object.values(options).map((option: any) => {
             if (hideOptions.includes(option)) return null
-            console.log('option', option)
             return (
               <SelectItem
                 key={option}
@@ -116,12 +115,12 @@ const GenericSelect = <T extends Record<string, string | number>>({
                 style={
                   variant === 'PRIMARY' && colors && option in colors
                     ? {
-                        backgroundColor: colors[option as T[keyof T]],
-                        color: 'white',
-                      }
+                      backgroundColor: colors[option as T[keyof T]],
+                      color: 'white',
+                    }
                     : {}
                 }
-              > 
+              >
                 <span className='whitespace-nowrap'>{option?.replace(/_/g, ' ')}</span>
               </SelectItem>
             )

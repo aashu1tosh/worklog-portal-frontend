@@ -10,7 +10,7 @@ interface GenericDashboardPageWrapper {
 
 const index: FC<GenericDashboardPageWrapper> = ({ title, error, children }) => {
   return (
-    <div>
+    <div className="animate-slideFromRight">
       <ErrorMessage error={error} />
       <Header title={title} />
       {children}

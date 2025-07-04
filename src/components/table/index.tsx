@@ -188,7 +188,7 @@ function DataTable<TData, TValue>({
       </div>
 
       {/* Table Section */}
-      <Card>
+      <Card className="overflow-y-auto">
         <div className="relative">
           {/* Loading Overlay */}
           {loading && (

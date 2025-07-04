@@ -90,7 +90,7 @@ const Modal = ({
         ref={closeOnOutsideClick ? modalRef : null}
         className={`bg-background  dark:bg-dark-foreground  dark:border dark:border-gray-700 dark:text-slate-300 rounded-[4px] shadow-lg ${getModalSizeClasses(
           size
-        )}  py-4 pl-4`}
+        )}  py-4 pl-4  animate-slideDown`}
       >
         {title && !hideCloseButton && (
           <div className="flex justify-between mb-4 mr-4">
@@ -121,11 +121,10 @@ const Modal = ({
             <div className="mt-4 gap-2 flex justify-end pr-4">
               {footerButton && (
                 <CancelButton
-                  className={`${
-                    type === "DELETE"
-                      ? "bg-white dark:bg-transparent border-primary text-primary hover:bg-transparent  hover:text-primary dark:text-slate-400 dark:border-slate-400 "
-                      : ""
-                  }`}
+                  className={`${type === "DELETE"
+                    ? "bg-white dark:bg-transparent border-primary text-primary hover:bg-transparent  hover:text-primary dark:text-slate-400 dark:border-slate-400 "
+                    : ""
+                    }`}
                   onClick={handleModalClose}
                 />
               )}
