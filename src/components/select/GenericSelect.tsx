@@ -42,6 +42,24 @@ const GenericSelect = <T extends Record<string, string | number>>({
     setSelectedValue(value)
   }, [value])
 
+  // Base classes similar to Input component
+  const getSelectTriggerClasses = () => {
+    const baseClasses = 'rounded-[4px] w-full border-[1px] bg-background dark:bg-[#02040A] dark:border-gray-600 dark:text-slate-300 px-3 h-[32px] text-sm ring-offset-background disabled:cursor-not-allowed disabled:opacity-50'
+    const errorClass = error
+      ? 'border-red-500'
+      : 'border-gray-300 hover:border-gray-400 focus:border-gray-400 data-[state=open]:border-gray-400'
+    
+    if (variant === 'SECONDARY') {
+      return 'border-none bg-transparent dark:bg-transparent p-0 text-[13px]'
+    }
+    
+    if (variant === 'PRIMARY' && colors) {
+      return `${baseClasses} ${errorClass} border-none p-0`
+    }
+    
+    return `${baseClasses} ${errorClass} text-[13px] ${className || ''}`
+  }
+
   return (
     <div>
       {label ? <FormLabel required={required}>{label}</FormLabel> : ''}
@@ -54,9 +72,7 @@ const GenericSelect = <T extends Record<string, string | number>>({
         disabled={disabled}
       >
         <SelectTrigger
-          className={`text-[13px] 
-          ${variant === 'PRIMARY' ? '' : 'border-none bg-transparent dark:bg-transparent p-0'}
-          ${error ? 'border-red-500' : ''} ${className}`}
+          className={getSelectTriggerClasses()}
           style={
             variant === 'PRIMARY' && colors
               ? {
