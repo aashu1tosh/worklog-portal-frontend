@@ -1,6 +1,6 @@
 import Table from "@/components/table";
 import TableAction from "@/components/table/TableAction";
-import type { ICompany } from "@/interfaces/company/company.interface";
+import type { ICompanyAdmin } from "@/interfaces/company/companyAdmin.interface";
 import type { IPagination } from "@/interfaces/pagination.interface";
 import type { ColumnDef } from "@tanstack/react-table";
 import { UserCog } from "lucide-react";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 interface IProps {
   loading: boolean;
-  values: ICompany[] | null;
+  values: ICompanyAdmin[] | null;
   pagination: IPagination;
   setPagination: React.Dispatch<React.SetStateAction<IPagination>>;
   addOpen?: boolean;
@@ -28,7 +28,7 @@ const ShowCompanyAdmin = (props: IProps) => {
     setSelectedId,
   } = props;
   const navigate = useNavigate();
-  const columns: ColumnDef<ICompany>[] = [
+  const columns: ColumnDef<ICompanyAdmin>[] = [
     {
       accessorKey: "name",
       header: "Name",
@@ -78,7 +78,7 @@ const ShowCompanyAdmin = (props: IProps) => {
         data={values ?? []}
         pagination={pagination}
         setPagination={setPagination}
-        addButtonLabel="Add New Company"
+        addButtonLabel="Add Company Admin"
         setAddOpen={setAddOpen}
       />
     </div>

@@ -3,13 +3,14 @@ import { endPoint } from "@/constants/endPoint";
 import { DocumentTitle } from "@/functions/DocumentTitle";
 import { useDataFetch } from "@/hooks/useDataFetch";
 import usePagination from "@/hooks/usePagination";
-import type { ICompany } from "@/interfaces/company/company.interface";
-import AddCompany from "@/pages/dashboard/company/AddCompany";
+import type { ICompanyAdmin } from "@/interfaces/company/companyAdmin.interface";
+import PageNotFound from "@/pages/PageNotFound";
 import { useParams } from "react-router-dom";
+import AddCompanyAdmin from "./AddCompanyAdmin";
 import ShowCompanyAdmin from "./ShowCompanyAdmin";
 
 const CompanyAdmin = () => {
-  DocumentTitle("Company Admin Management Page");
+  DocumentTitle("Company Admin Management");
   const { id } = useParams();
 
   const [pagination, setPagination] = usePagination();
@@ -22,10 +23,15 @@ const CompanyAdmin = () => {
     setAddOpen,
     selectedId,
     setSelectedId,
-  } = useDataFetch<ICompany>({
+  } = useDataFetch<ICompanyAdmin>({
     endpoint: endPoint?.company?.companyAdmin + `/${id}`,
     pagination: { pagination, setPagination },
+    queryEnabled: !!id,
   });
+
+  if (!id) {
+    return <PageNotFound />;
+  }
 
   return (
     <GenericWrapper title={"Company Admins"} error={error}>
@@ -39,7 +45,8 @@ const CompanyAdmin = () => {
         selectedId={selectedId}
         setSelectedId={setSelectedId}
       />
-      <AddCompany
+      <AddCompanyAdmin
+        id={id as string}
         open={addOpen}
         setOpen={setAddOpen}
         selectedId={selectedId}

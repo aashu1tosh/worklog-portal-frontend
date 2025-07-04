@@ -136,7 +136,6 @@ const AddCompany = ({ open, setOpen, selectedId }: IProps) => {
                     {...register('confirmPassword')}
                 />
             </div>
-
         </Modal>
     )
 }

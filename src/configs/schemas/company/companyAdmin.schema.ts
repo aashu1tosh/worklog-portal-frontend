@@ -1,12 +1,16 @@
 // This regex checks for at least one lowercase letter, one uppercase letter, one digit, and one special character, with a minimum length of 8 characters.
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
 
+import { Role } from '@/constants/enum';
 import * as Yup from 'yup';
 
-export const adminSchema = Yup.object().shape({
+export const companyAdminSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
     middleName: Yup.string().nullable(),
     lastName: Yup.string().required('Last name is required'),
+    role: Yup.mixed<Role>()
+        .oneOf(Object.values(Role), 'Invalid role')
+        .required('Role is required'),
     phone: Yup.string()
         .matches(/^[0-9]+$/, 'Phone number must contain only digits')
         .required('Phone number is required'),
@@ -17,6 +21,6 @@ export const adminSchema = Yup.object().shape({
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'Passwords must match')
         .required('Confirm password is required'),
-})
+});
 
-export type IAdminForm = Yup.InferType<typeof adminSchema>;
+export type ICompanyAdminForm = Yup.InferType<typeof companyAdminSchema>;
