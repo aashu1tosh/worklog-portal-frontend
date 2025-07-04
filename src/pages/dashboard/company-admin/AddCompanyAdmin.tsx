@@ -10,10 +10,9 @@ import { endPoint } from "@/constants/endPoint";
 import { Role } from "@/constants/enum";
 import { handleFormSubmission } from "@/functions/formSubmission";
 import useApiMutation from "@/hooks/useAPIMutation";
-import type { ICompanyAdmin } from "@/interfaces/company/companyAdmin.interface";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Lock, Phone, User } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { IoMailOutline } from "react-icons/io5";
 
 interface IProps {
@@ -24,13 +23,13 @@ interface IProps {
   setSelectedId?: (data: string | null) => void;
 }
 const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
-  const { createMutation } = useApiMutation<ICompanyAdmin>({
+  const { createMutation } = useApiMutation<Omit<ICompanyAdminForm, "confirmPassword">>({
     endpoint: endPoint?.company?.companyAdmin,
   });
 
   const defaultValues: ICompanyAdminForm = {
     firstName: "",
-    middleName: null,
+    // middleName is optional, so omit it if not provided
     lastName: "",
     phone: "",
     role: Role.COMPANY_ADMIN,
@@ -52,7 +51,7 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
     defaultValues,
   });
 
-  const onSubmit = async (data: ICompanyAdminForm) => {
+  const onSubmit: SubmitHandler<ICompanyAdminForm> = async (data: ICompanyAdminForm) => {
     const payload = {
       firstName: data.firstName,
       middleName: data.middleName,

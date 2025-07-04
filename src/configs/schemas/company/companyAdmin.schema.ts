@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 export const companyAdminSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
-    middleName: Yup.string().nullable(),
+    middleName: Yup.string().optional(),
     lastName: Yup.string().required('Last name is required'),
     role: Yup.mixed<Role>()
         .oneOf(Object.values(Role), 'Invalid role')
