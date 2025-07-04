@@ -61,6 +61,7 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
       password: data.password,
       phone: data.phone,
       companyId: id,
+      role: data.role,
     };
 
     await handleFormSubmission({
