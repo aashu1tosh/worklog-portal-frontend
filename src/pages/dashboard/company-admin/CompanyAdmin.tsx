@@ -27,6 +27,7 @@ const CompanyAdmin = () => {
     endpoint: endPoint?.company?.companyAdmin + `/${id}`,
     pagination: { pagination, setPagination },
     queryEnabled: !!id,
+    customQueryKey: ["company-admin", id],
   });
 
   if (!id) {
