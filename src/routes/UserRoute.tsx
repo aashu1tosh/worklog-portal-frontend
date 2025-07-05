@@ -17,6 +17,10 @@ const LoginLog = LazyLoading(
 const CompanyAdmin = LazyLoading(
   lazy(async () => await import("@/pages/dashboard/company-admin/CompanyAdmin"))
 );
+
+const CompanyEmployee = LazyLoading(
+  lazy(async () => await import("@/pages/dashboard/company-employee/CompanyEmployee"))
+);
 export const userRoute = [
   {
     path: "dashboard",
@@ -49,6 +53,10 @@ export const userRoute = [
       {
         path: "company-admin-management/:id",
         element: <CompanyAdmin />,
+      },
+      {
+        path: "employee-management",
+        element: <CompanyEmployee />,
       },
       {
         path: "*",

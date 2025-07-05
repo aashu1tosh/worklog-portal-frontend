@@ -15,7 +15,7 @@ import {
   Settings,
   Shield,
 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 interface MenuItem {
@@ -36,8 +36,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
   const navigate = useNavigate();
   const pathname = useLocation();
   const { authData } = useAuth();
-  const userRole = authData?.role;
-  const companyID = authData?.companyAdmin?.company?.id;
+  const userRole = useMemo(() => authData?.role, [authData?.role]);
+  const companyId = useMemo(() => authData?.companyAdmin?.company?.id, [authData?.companyAdmin?.company?.id]);
 
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const [collapsed, setCollapsed] = useState<boolean>(isCollapsed);
@@ -98,8 +98,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
     },
     {
       icon: <Shield size={18} />,
+      title: "Employee Management",
+      url: `/dashboard/employee-management`,
+      roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
+    },
+    {
+      icon: <Shield size={18} />,
       title: "Admin Dashboard",
-      url: `/dashboard/company-admin-management/${companyID}`,
+      url: `/dashboard/company-admin-management/${companyId}`,
       roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
     },
     {
@@ -142,13 +148,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
           <CollapsibleTrigger asChild>
             <Button
               variant="ghost"
-              className={`w-full h-10 px-3 ${
-                isChild
-                  ? "pl-8 justify-start gap-3"
-                  : collapsed
+              className={`w-full h-10 px-3 ${isChild
+                ? "pl-8 justify-start gap-3"
+                : collapsed
                   ? "justify-center px-0"
                   : "justify-start gap-3"
-              } hover:bg-secondary text-secondary-foreground transition-colors`}
+                } hover:bg-secondary text-secondary-foreground transition-colors`}
               onClick={() => handleItemClick(undefined, item?.title)}
             >
               {!isChild && (
@@ -189,24 +194,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
       <Button
         key={item?.url}
         variant="ghost"
-        className={`w-full h-10 px-3 ${
-          isChild
-            ? "pl-8 justify-start gap-3"
-            : collapsed
+        className={`w-full h-10 px-3 ${isChild
+          ? "pl-8 justify-start gap-3"
+          : collapsed
             ? "justify-center px-0"
             : "justify-start gap-3"
-        } ${
-          isActive
+          } ${isActive
             ? "bg-primary text-primary-foreground border-r-2 border-primary"
             : "hover:bg-secondary text-secondary-foreground"
-        } transition-colors`}
+          } transition-colors`}
         onClick={() => handleItemClick(item?.url, item?.title)}
       >
         {!isChild && (
           <span
-            className={`flex-shrink-0 ${
-              isActive ? "text-primary-foreground" : "text-muted-foreground"
-            }`}
+            className={`flex-shrink-0 ${isActive ? "text-primary-foreground" : "text-muted-foreground"
+              }`}
           >
             {item.icon}
           </span>
@@ -222,15 +224,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
 
   return (
     <div
-      className={`group h-full bg-card border-r border-border transition-all duration-300 ${
-        collapsed ? "w-16" : "w-64"
-      } relative`}
+      className={`group h-full bg-card border-r border-border transition-all duration-300 ${collapsed ? "w-16" : "w-64"
+        } relative`}
     >
       {/* Header with Toggle Button */}
       <div
-        className={`flex items-center justify-between p-3 border-b border-border ${
-          collapsed ? "justify-center" : ""
-        }`}
+        className={`flex items-center justify-between p-3 border-b border-border ${collapsed ? "justify-center" : ""
+          }`}
       >
         {!collapsed && (
           <h2 className="text-lg font-semibold text-foreground">Menu</h2>
@@ -239,9 +239,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
           variant="ghost"
           size="sm"
           onClick={toggleSidebar}
-          className={`h-8 w-8 p-0 hover:bg-secondary flex-shrink-0 ${
-            collapsed ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-          } transition-opacity duration-200`}
+          className={`h-8 w-8 p-0 hover:bg-secondary flex-shrink-0 ${collapsed ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+            } transition-opacity duration-200`}
         >
           <Menu size={16} className="text-muted-foreground" />
         </Button>

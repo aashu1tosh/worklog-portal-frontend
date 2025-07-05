@@ -1,15 +1,14 @@
 import Table from "@/components/table";
 import { getFullName } from "@/functions/getFullName";
-import type { ICompanyAdmin } from "@/interfaces/company/companyAdmin.interface";
+import type { ICompanyEmployee } from "@/interfaces/company/companyEmployee.interface";
 import type { IPagination } from "@/interfaces/pagination.interface";
 import type { ColumnDef } from "@tanstack/react-table";
-import { UserCog } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {
   loading: boolean;
-  values: ICompanyAdmin[] | null;
+  values: ICompanyEmployee[] | null;
   pagination: IPagination;
   setPagination: React.Dispatch<React.SetStateAction<IPagination>>;
   addOpen?: boolean;
@@ -27,14 +26,14 @@ const ShowCompanyAdmin = (props: IProps) => {
     setAddOpen,
   } = props;
   const navigate = useNavigate();
-  const columns: ColumnDef<ICompanyAdmin>[] = [
+  const columns: ColumnDef<ICompanyEmployee>[] = [
     {
       accessorKey: "name",
       header: "Name",
       cell: ({ row }) => {
         const { firstName, middleName, lastName } = row.original;
         return (
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center gap-2">
             <span className="text-sm font-medium">
               {getFullName({ firstName, middleName, lastName })}
             </span>
@@ -69,16 +68,7 @@ const ShowCompanyAdmin = (props: IProps) => {
       header: () => <div className="text-center">Actions</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <div
-            onClick={() => {
-              navigate(
-                `/dashboard/company-admin/${row.original?.id as string}`
-              );
-            }}
-            className="bg-indigo-500 dark:bg-transparent border dark:border px-[7px] py-[4px] rounded-[4px] hover:bg-indigo-700 cursor-pointer transition-all duration-200"
-          >
-            <UserCog className="h-[18px] w-[18px] text-white dark:text-indigo-700" />
-          </div>
+
         </div>
       ),
     },
@@ -92,7 +82,7 @@ const ShowCompanyAdmin = (props: IProps) => {
         data={values ?? []}
         pagination={pagination}
         setPagination={setPagination}
-        addButtonLabel="Add Company Admin"
+        addButtonLabel="Add Employees"
         setAddOpen={setAddOpen}
       />
     </div>

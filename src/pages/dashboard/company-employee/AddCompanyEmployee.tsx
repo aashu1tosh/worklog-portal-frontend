@@ -2,10 +2,8 @@ import Modal from "@/components/modal";
 import GenericSelect from "@/components/select/GenericSelect";
 import { SubmitButton } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  companyAdminSchema,
-  type ICompanyAdminForm,
-} from "@/configs/schemas/company/companyAdmin.schema";
+import { companyEmployeeSchema, type ICompanyEmployeeForm } from "@/configs/schemas/company/companyEmployee.schema";
+
 import { endPoint } from "@/constants/endPoint";
 import { Role } from "@/constants/enum";
 import { handleFormSubmission } from "@/functions/formSubmission";
@@ -16,23 +14,21 @@ import { useForm } from "react-hook-form";
 import { IoMailOutline } from "react-icons/io5";
 
 interface IProps {
-  id: string;
   open: boolean;
   setOpen: (data: boolean) => void;
   selectedId: string | null;
   setSelectedId?: (data: string | null) => void;
 }
-const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
-  const { createMutation } = useApiMutation<Omit<ICompanyAdminForm, "confirmPassword">>({
-    endpoint: endPoint?.company?.companyAdmin,
+const AddCompanyAdmin = ({ open, setOpen, selectedId }: IProps) => {
+  const { createMutation } = useApiMutation<Omit<ICompanyEmployeeForm, "confirmPassword">>({
+    endpoint: endPoint?.company?.companyEmployee,
   });
 
-  const defaultValues: ICompanyAdminForm = {
+  const defaultValues: ICompanyEmployeeForm = {
     firstName: "",
-    // middleName is optional, so omit it if not provided
     lastName: "",
     phone: "",
-    role: Role.COMPANY_ADMIN,
+    role: Role.COMPANY_EMPLOYEE,
     email: "",
     password: "",
     confirmPassword: "",
@@ -46,12 +42,12 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
     watch,
     trigger,
     formState: { errors, isSubmitting },
-  } = useForm<ICompanyAdminForm>({
-    resolver: yupResolver(companyAdminSchema),
+  } = useForm<ICompanyEmployeeForm>({
+    resolver: yupResolver(companyEmployeeSchema),
     defaultValues,
   });
 
-  const onSubmit = async (data: ICompanyAdminForm) => {
+  const onSubmit = async (data: ICompanyEmployeeForm) => {
     const payload = {
       firstName: data.firstName,
       middleName: data.middleName,
@@ -59,7 +55,6 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
       email: data.email,
       password: data.password,
       phone: data.phone,
-      companyId: id,
       role: data.role,
     };
 
@@ -76,7 +71,7 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
     <Modal
       open={open}
       setOpen={setOpen}
-      title={selectedId ? "Update Company Admin" : "Add New Company Admin"}
+      title={selectedId ? "Update Company Details" : "Add New Company Employee"}
       onSubmit={handleSubmit(onSubmit)}
       showFooter
       footerButton={
@@ -119,7 +114,7 @@ const AddCompanyAdmin = ({ id, open, setOpen, selectedId }: IProps) => {
             setValue("role", value as Role);
             if (value) void trigger("role");
           }}
-          hideOptions={[Role.SUDO_ADMIN, Role.ADMIN, Role.COMPANY_EMPLOYEE]}
+          hideOptions={[Role.SUDO_ADMIN, Role.ADMIN, Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN]}
           options={Role}
           required
           placeholder="Select a role"
