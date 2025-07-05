@@ -24,7 +24,7 @@ import {
   Sun,
   User,
 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationDialog } from "../confirmDialog";
 
@@ -36,7 +36,15 @@ const Navbar = () => {
 
   const [notifications] = useState(3);
   const [logoutConfirmation, setLogoutConfirmation] = useState(false);
-
+  const fullName = useMemo(() => {
+    if (authData?.admin) {
+      return `${authData?.admin?.firstName} ${authData?.admin?.lastName}`;
+    } else if (authData?.companyAdmin) {
+      return `${authData?.companyAdmin?.firstName} ${authData?.companyAdmin?.lastName}`;
+    } else if (authData?.companyEmployee) {
+      return `${authData?.companyEmployee?.firstName} ${authData?.companyEmployee?.lastName}`;
+    } return "";
+  }, [authData]);
   const changeTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
     toggleTheme(newTheme);
@@ -183,13 +191,12 @@ const Navbar = () => {
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="" alt="User" />
                   <AvatarFallback className="bg-primary text-primary-foreground uppercase">
-                    {authData?.admin?.firstName?.[0]}
-                    {authData?.admin?.lastName?.[0]}
+                    {fullName}
                   </AvatarFallback>
                 </Avatar>
                 <div className="hidden md:block text-left">
                   <p className="text-sm font-medium text-foreground">
-                    {authData?.admin?.firstName} {authData?.admin?.lastName}
+                    {fullName}
                   </p>
                   <p className="text-xs text-muted-foreground">{authData?.email}</p>
                 </div>

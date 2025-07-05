@@ -33,7 +33,7 @@ const ShowCompanyAdmin = (props: IProps) => {
       cell: ({ row }) => {
         const { firstName, middleName, lastName } = row.original;
         return (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <span className="text-sm font-medium">
               {getFullName({ firstName, middleName, lastName })}
             </span>
