@@ -22,7 +22,7 @@ interface MenuItem {
   icon?: ReactNode;
   title: string;
   url?: string;
-  roles?: string[];
+  roles?: Role[];
   children?: MenuItem[];
 }
 
@@ -48,9 +48,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
   };
 
   // Check if user has required role
-  const hasRequiredRole = (itemRoles?: string[]): boolean => {
-    if (!itemRoles || itemRoles.length === 0) return true;
-    return itemRoles.includes(userRole);
+  const hasRequiredRole = (itemRoles?: Role[]): boolean => {
+    if (!itemRoles || itemRoles?.length === 0) return true;
+    return itemRoles.includes(userRole as Role);
   };
 
   // Toggle submenu open/close
