@@ -1,5 +1,6 @@
 import Admin from "@/pages/dashboard/admin/Admin";
 import Company from "@/pages/dashboard/company/Company";
+import Worklog from "@/pages/dashboard/worklog/Worklog";
 import PageNotFound from "@/pages/PageNotFound";
 import { ProtectedRoute } from "@/ProtectedRoute";
 import { lazy } from "react";
@@ -57,6 +58,10 @@ export const userRoute = [
       {
         path: "employee-management",
         element: <CompanyEmployee />,
+      },
+            {
+        path: "worklog",
+        element: <Worklog />,
       },
       {
         path: "*",

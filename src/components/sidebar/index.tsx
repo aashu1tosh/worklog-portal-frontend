@@ -113,8 +113,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
     },
     {
       icon: <Shield size={18} />,
-      title: "Worklog Management",
-      url: `/dashboard/compan/${companyId}`,
+      title: "Worklog",
+      url: `/dashboard/worklog`,
+      roles: [Role.COMPANY_EMPLOYEE],
+    },
+    {
+      icon: <Shield size={18} />,
+      title: "Worklog",
+      url: `/dashboard/admin-worklog`,
       roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
     },
     {

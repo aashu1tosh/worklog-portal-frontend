@@ -1,16 +1,14 @@
 import Table from "@/components/table";
 import TableAction from "@/components/table/TableAction";
-import type { ICompany } from "@/interfaces/company/company.interface";
+import { formatDateTime } from "@/helpers/formatDateTime";
 import type { IWorklog } from "@/interfaces/company/worklog/worklog.interface";
 import type { IPagination } from "@/interfaces/pagination.interface";
 import type { ColumnDef } from "@tanstack/react-table";
-import { UserCog } from "lucide-react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 interface IProps {
   loading: boolean;
-  values: ICompany[] | null;
+  values: IWorklog[] | null;
   pagination: IPagination;
   setPagination: React.Dispatch<React.SetStateAction<IPagination>>;
   addOpen?: boolean;
@@ -28,39 +26,30 @@ const ShowWorklog = (props: IProps) => {
     setAddOpen,
     setSelectedId,
   } = props;
-  const navigate = useNavigate();
+  
   const columns: ColumnDef<IWorklog>[] = [
     {
-      accessorKey: "name",
-      header: "Name",
-    },
-
-    {
-      accessorKey: "address",
-      header: "Address",
+      accessorKey: "createdAt",
+      header: "Created At",
+      cell: ({ row }) => (formatDateTime(row.original.createdAt as string) ?? 'n/a'),
     },
     {
-      accessorKey: "email",
-      header: "Email",
+      accessorKey: "taskCompleted",
+      header: "Task Completed",
     },
     {
-      accessorKey: "phone",
-      header: "Phone",
+      accessorKey: "taskPlanned",
+      header: "Planned Task",
+    },
+    {
+      accessorKey: "challengingTask",
+      header: "Task that challenged",
     },
     {
       id: "actions",
       header: () => <div className="text-center">Actions</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <div
-            onClick={() => {
-              navigate(`/dashboard/company-admin-management/${row.original?.id as string}`);
-            }}
-            className="bg-indigo-500 dark:bg-transparent dark:border-[1px] dark:border-indigo-500 px-[7px] py-[4px] rounded-[4px] hover:bg-indigo-700 cursor-pointer transition-all duration-200"
-          >
-            <UserCog className="h-[18px] w-[18px] text-white dark:text-indigo-700" />
-          </div>
-
           <TableAction
             onEdit={() =>
               setSelectedId && setSelectedId(row?.original?.id as string)
