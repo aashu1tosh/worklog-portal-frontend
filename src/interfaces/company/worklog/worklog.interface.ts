@@ -6,4 +6,5 @@ export interface IWorklog extends IBaseInterface {
     taskPlanned: string;
     challengingTask?: string;
     companyEmployee?: ICompany;
+    today?: boolean;
 }

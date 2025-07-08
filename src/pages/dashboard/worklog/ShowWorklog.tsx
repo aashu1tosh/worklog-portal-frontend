@@ -26,7 +26,7 @@ const ShowWorklog = (props: IProps) => {
     setAddOpen,
     setSelectedId,
   } = props;
-  
+
   const columns: ColumnDef<IWorklog>[] = [
     {
       accessorKey: "createdAt",
@@ -54,6 +54,7 @@ const ShowWorklog = (props: IProps) => {
             onEdit={() =>
               setSelectedId && setSelectedId(row?.original?.id as string)
             }
+            disableUpdate={!row?.original?.today}
           />
         </div>
       ),
