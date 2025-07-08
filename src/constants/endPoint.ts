@@ -15,6 +15,7 @@ export const endPoint = {
         company: '/company',
         companyAdmin: '/company/admin',
         companyEmployee: '/company/employee',
+        worklog: '/company/worklog',
     },
 
     loginLog: {
