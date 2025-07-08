@@ -71,9 +71,9 @@ const ShowCompanyAdmin = (props: IProps) => {
         <div className="flex items-center justify-center gap-2">
           <div
             onClick={() => {
-              navigate(
-                `/dashboard/company-admin/${row.original?.id as string}`
-              );
+              // navigate(
+              //   `/dashboard/company-admin/${row.original?.id as string}`
+              // );
             }}
             className="bg-indigo-500 dark:bg-transparent border dark:border px-[7px] py-[4px] rounded-[4px] hover:bg-indigo-700 cursor-pointer transition-all duration-200"
           >
