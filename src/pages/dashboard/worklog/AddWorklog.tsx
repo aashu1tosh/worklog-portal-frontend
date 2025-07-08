@@ -17,7 +17,7 @@ interface IProps {
     selectedId: string | null
     setSelectedId?: (data: string | null) => void
 }
-const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
+const AddWorklog = ({ open, setOpen, selectedId, setSelectedId }: IProps) => {
     const { getById } = useAPI<IWorklog>()
     const [selectedValue, setSelectedValue] = useState<IWorklog | null>(null)
 
@@ -33,7 +33,7 @@ const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
     }
 
     const { isLoading, data } = useQuery({
-        queryKey: ['worklog-details', selectedId],
+        queryKey: [selectedId],
         queryFn: async () => {
             const response = await getById(endPoint?.company?.worklog, selectedId as string)
             if (!response?.status) throw new Error(response?.message)
@@ -60,14 +60,14 @@ const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
     }, [data])
 
     useEffect(() => {
-        if (selectedId && selectedValue) {
+        if (selectedId) {
             reset({
                 taskCompleted: selectedValue?.taskCompleted ?? '',
                 taskPlanned: selectedValue?.taskPlanned ?? '',
                 challengingTask: selectedValue?.challengingTask ?? '',
             })
         }
-    }, [selectedId])
+    }, [selectedValue])
 
     const onSubmit = async (data: IWorklog) => {
 
@@ -97,6 +97,9 @@ const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
             footerButton={<SubmitButton update={!!selectedId} loading={isSubmitting} />}
             onHandleClose={() => {
                 reset(defaultValues)
+                setSelectedValue(null)
+                if (setSelectedId)
+                    setSelectedId(null)
             }}
         >
             {selectedId && isLoading ? (
@@ -104,47 +107,47 @@ const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
             ) :
                 <div className='grid grid-cols-1 gap-4 py-2'>
                     <div className='flex flex-col gap-2'>
-                        <label className='text-sm font-medium'>
-                            Tasks Completed Today <span className='text-red-500'>*</span>
+                        <label className='text-sm font-medium text-foreground'>
+                            Tasks Completed Today <span className='text-destructive'>*</span>
                         </label>
                         <textarea
-                            className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none'
+                            className='w-full px-3 py-2 bg-input border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent resize-none text-foreground placeholder:text-muted-foreground transition-colors'
                             placeholder='Describe the tasks you completed today...'
                             rows={4}
                             {...register('taskCompleted')}
                         />
                         {errors?.taskCompleted && (
-                            <span className='text-red-500 text-sm'>{errors.taskCompleted.message}</span>
+                            <span className='text-destructive text-sm'>{errors.taskCompleted.message}</span>
                         )}
                     </div>
 
                     <div className='flex flex-col gap-2'>
-                        <label className='text-sm font-medium'>
-                            Tasks Planned for Tomorrow <span className='text-red-500'>*</span>
+                        <label className='text-sm font-medium text-foreground'>
+                            Tasks Planned for Tomorrow <span className='text-destructive'>*</span>
                         </label>
                         <textarea
-                            className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none'
+                            className='w-full px-3 py-2 bg-input border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent resize-none text-foreground placeholder:text-muted-foreground transition-colors'
                             placeholder='Describe the tasks you plan to work on tomorrow...'
                             rows={4}
                             {...register('taskPlanned')}
                         />
                         {errors?.taskPlanned && (
-                            <span className='text-red-500 text-sm'>{errors.taskPlanned.message}</span>
+                            <span className='text-destructive text-sm'>{errors.taskPlanned.message}</span>
                         )}
                     </div>
 
                     <div className='flex flex-col gap-2'>
-                        <label className='text-sm font-medium'>
+                        <label className='text-sm font-medium text-foreground'>
                             Challenging Tasks / Issues
                         </label>
                         <textarea
-                            className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none'
+                            className='w-full px-3 py-2 bg-input border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent resize-none text-foreground placeholder:text-muted-foreground transition-colors'
                             placeholder='Describe any challenges or issues you faced...'
                             rows={3}
                             {...register('challengingTask')}
                         />
                         {errors?.challengingTask && (
-                            <span className='text-red-500 text-sm'>{errors.challengingTask.message}</span>
+                            <span className='text-destructive text-sm'>{errors.challengingTask.message}</span>
                         )}
                     </div>
                 </div>
@@ -153,4 +156,4 @@ const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
     )
 }
 
-export default AddWorklog;
+export default AddWorklog

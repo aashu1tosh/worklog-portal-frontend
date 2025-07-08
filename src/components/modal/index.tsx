@@ -72,7 +72,7 @@ const Modal = ({
       case "sm":
         return "lg:w-1/3 md:w-[60%] w-[95%] max-w-md";
       case "md":
-        return "lg:w-1/2 md:w-[80%] w-[95%] max-w-2xl"; // Fixed: was md:[80%]
+        return "lg:w-1/2 md:w-[82%] w-[95%] max-w-2xl"; // Fixed: was md:[80%]
       case "lg":
         return "lg:w-2/3 md:w-[85%] w-[95%] max-w-4xl";
       case "xl":
@@ -85,7 +85,7 @@ const Modal = ({
   };
 
   return createPortal(
-    <div className="fixed inset-0 modal z-[99] flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 modal z-[99] flex items-center justify-center p-3 bg-black bg-opacity-50">
       <div
         ref={closeOnOutsideClick ? modalRef : null}
         className={`bg-background  dark:bg-dark-foreground  dark:border dark:border-gray-700 dark:text-slate-300 rounded-[4px] shadow-lg ${getModalSizeClasses(
@@ -114,7 +114,7 @@ const Modal = ({
             e?.preventDefault();
           }}
         >
-          <div className="max-h-[80vh] overflow-y-auto pr-4 pb-2">
+          <div className="max-h-[80vh] overflow-y-auto pl-1 pr-3 pb-2">
             {children}
           </div>
           {showFooter && (
