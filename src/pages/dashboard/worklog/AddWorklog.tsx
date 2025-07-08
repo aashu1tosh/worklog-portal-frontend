@@ -1,6 +1,5 @@
 import Modal from '@/components/modal'
 import { SubmitButton } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { worklogSchema } from '@/configs/schemas/company/worklog/worklog.schema'
 import { endPoint } from '@/constants/endPoint'
 import { handleFormSubmission } from '@/functions/formSubmission'
@@ -11,8 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { IoCallOutline, IoLocationOutline } from 'react-icons/io5'
-import { TbBuildingBank } from 'react-icons/tb'
 
 interface IProps {
     open: boolean
@@ -63,7 +60,7 @@ const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
     }, [data])
 
     useEffect(() => {
-        if (selectedId) {
+        if (selectedId && selectedValue) {
             reset({
                 taskCompleted: selectedValue?.taskCompleted ?? '',
                 taskPlanned: selectedValue?.taskPlanned ?? '',
@@ -94,7 +91,7 @@ const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
         <Modal
             open={open}
             setOpen={setOpen}
-            title={selectedId ? 'Update Company Details' : 'Add New Company'}
+            title={selectedId ? 'Update Worklog' : 'Add New Worklog'}
             onSubmit={handleSubmit(onSubmit)}
             showFooter
             footerButton={<SubmitButton update={!!selectedId} loading={isSubmitting} />}
@@ -105,34 +102,55 @@ const AddWorklog = ({ open, setOpen, selectedId }: IProps) => {
             {selectedId && isLoading ? (
                 'Loading...'
             ) :
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4 py-2'>
-                    <Input
-                        label={'Name'}
-                        required
-                        error={errors?.taskCompleted}
-                        placeholder={'Todays completed task'}
-                        icon={<TbBuildingBank />}
-                        {...register('taskCompleted')}
-                    />
-                    <Input
-                        label={'Address'}
-                        required
-                        error={errors?.taskPlanned}
-                        placeholder={'Planned task for tomorrow'}
-                        icon={<IoLocationOutline />}
-                        {...register('taskPlanned')}
-                    />
-                    <Input
-                        label={'Challenging Task'}
-                        error={errors?.challengingTask}
-                        placeholder={'Enter challenges faced'}
-                        icon={<IoCallOutline />}
-                        {...register('challengingTask')}
-                    />
+                <div className='grid grid-cols-1 gap-4 py-2'>
+                    <div className='flex flex-col gap-2'>
+                        <label className='text-sm font-medium'>
+                            Tasks Completed Today <span className='text-red-500'>*</span>
+                        </label>
+                        <textarea
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none'
+                            placeholder='Describe the tasks you completed today...'
+                            rows={4}
+                            {...register('taskCompleted')}
+                        />
+                        {errors?.taskCompleted && (
+                            <span className='text-red-500 text-sm'>{errors.taskCompleted.message}</span>
+                        )}
+                    </div>
+
+                    <div className='flex flex-col gap-2'>
+                        <label className='text-sm font-medium'>
+                            Tasks Planned for Tomorrow <span className='text-red-500'>*</span>
+                        </label>
+                        <textarea
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none'
+                            placeholder='Describe the tasks you plan to work on tomorrow...'
+                            rows={4}
+                            {...register('taskPlanned')}
+                        />
+                        {errors?.taskPlanned && (
+                            <span className='text-red-500 text-sm'>{errors.taskPlanned.message}</span>
+                        )}
+                    </div>
+
+                    <div className='flex flex-col gap-2'>
+                        <label className='text-sm font-medium'>
+                            Challenging Tasks / Issues
+                        </label>
+                        <textarea
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none'
+                            placeholder='Describe any challenges or issues you faced...'
+                            rows={3}
+                            {...register('challengingTask')}
+                        />
+                        {errors?.challengingTask && (
+                            <span className='text-red-500 text-sm'>{errors.challengingTask.message}</span>
+                        )}
+                    </div>
                 </div>
             }
         </Modal>
     )
 }
 
-export default AddWorklog
+export default AddWorklog;
