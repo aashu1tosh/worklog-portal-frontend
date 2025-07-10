@@ -4,11 +4,13 @@ import { updatePasswordSchema } from "@/configs/schemas/auth.schema";
 import { endPoint } from "@/constants/endPoint";
 import { DocumentTitle } from "@/functions/DocumentTitle";
 import useAPI from "@/hooks/useAPI";
+import useAuth from "@/hooks/useAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { AiOutlineLock } from "react-icons/ai";
 import { GoDotFill } from "react-icons/go";
 import { LuLock } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 interface IUpdatePassword {
@@ -19,7 +21,9 @@ interface IUpdatePassword {
 
 const UpdatePassword = () => {
   DocumentTitle("Update password");
+  const navigate = useNavigate();
   const { patch } = useAPI<IUpdatePassword>();
+  const { setIsAuthorized, setAuthData } = useAuth();
 
   const defaultValues = {
     oldPassword: "",
@@ -45,6 +49,9 @@ const UpdatePassword = () => {
       toast.success(`Update Password`, {
         description: response?.message,
       });
+      setIsAuthorized(false);
+      setAuthData(null);
+      navigate("/auth/login");
     } catch (error: any) {
       toast.error(`Update Failed`, {
         description: error?.message ?? "Failed to update password",
@@ -53,32 +60,32 @@ const UpdatePassword = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-170px)] my-4 w-full flex justify-center items-center">
-      <div className="md:w-[60%] w-[full] p-8 border-[1px] border-gray-200 dark:border-gray-600 rounded-[4px] bg-slate-50 dark:bg-dark">
-        <h1 className="text-black font-semibold text-[22px] dark:text-slate-300">
+    <div className="min-h-[calc(100vh-170px)] my-4 w-full flex justify-center items-center bg-background">
+      <div className="md:w-[60%] w-[full] p-8 border border-border rounded bg-card">
+        <h1 className="text-foreground font-semibold text-[22px]">
           Update Password
         </h1>
-        <p className="text-sm dark:text-slate-300">
+        <p className="text-muted-foreground">
           Password Update Guidelines
         </p>
-        <ul className="text-sm list-disc list-inside mt-2 ">
-          <li className="text-[13px] text-gray-600 dark:text-slate-300 flex items-center gap-2">
+        <ul className="list-disc list-inside mt-2 ">
+          <li className=" text-muted-foreground flex items-center gap-2">
             <GoDotFill />
             Use at least 8 characters
           </li>
-          <li className="text-[13px] text-gray-600 dark:text-slate-300 flex items-center gap-2">
+          <li className=" text-muted-foreground flex items-center gap-2">
             <GoDotFill />
             Include both uppercase and lowercase letters
           </li>
-          <li className="text-[13px] text-gray-600 dark:text-slate-300 flex items-center gap-2">
+          <li className=" text-muted-foreground flex items-center gap-2">
             <GoDotFill />
             Include at least one number
           </li>
-          <li className="text-[13px] text-gray-600 dark:text-slate-300 flex items-center gap-2">
+          <li className=" text-muted-foreground flex items-center gap-2">
             <GoDotFill />
             Include at least one special character (e.g., @, $, !, %)
           </li>
-          <li className="text-[13px] text-gray-600 dark:text-slate-300 flex items-center gap-2">
+          <li className=" text-muted-foreground flex items-center gap-2">
             <GoDotFill />
             Avoid using easily guessable information (e.g., your name,
             birthdate)

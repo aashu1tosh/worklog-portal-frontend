@@ -142,7 +142,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
         },
         {
           icon: <Lock size={16} />,
-          title: "Security",
+          title: "Update Password",
           url: "/dashboard/settings/update-password",
         },
         {
@@ -175,13 +175,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
           <CollapsibleTrigger asChild>
             <Button
               variant="ghost"
-              className={`w-full h-10 px-3 ${
-                isChild
-                  ? "pl-8 justify-start gap-3"
-                  : collapsed
+              className={`w-full h-10 px-3 ${isChild
+                ? "pl-8 justify-start gap-3"
+                : collapsed
                   ? "justify-center px-0"
                   : "justify-start gap-3"
-              } hover:bg-secondary text-secondary-foreground transition-colors`}
+                } hover:bg-accent text-secondary-foreground transition-colors`}
               onClick={() => handleItemClick(undefined, item?.title)}
             >
               {!isChild && (
@@ -222,25 +221,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
       <Button
         key={item?.url}
         variant="ghost"
-        className={`w-full h-10 px-3 ${
-          isChild
-            ? "pl-8 justify-start gap-3"
-            : collapsed
+        className={`w-full h-10 px-3 ${isChild
+          ? "pl-8 justify-start gap-3"
+          : collapsed
             ? "justify-center px-0"
             : "justify-start gap-3"
-        } ${
-          isActive
+          } ${isActive
             ? "bg-primary text-primary-foreground border-r-2 border-primary"
-            : "hover:bg-secondary text-secondary-foreground"
-        } transition-colors`}
+            : "hover:bg-accent text-secondary-foreground"
+          } transition-colors`}
         onClick={() => handleItemClick(item?.url, item?.title)}
       >
         {/* Show icon for both parent and child items */}
         {item?.icon && (
           <span
-            className={`flex-shrink-0 ${
-              isActive ? "text-primary-foreground" : "text-muted-foreground"
-            }`}
+            className={`flex-shrink-0 ${isActive ? "text-primary-foreground" : "text-muted-foreground"
+              }`}
           >
             {item.icon}
           </span>
@@ -256,15 +252,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
 
   return (
     <div
-      className={`group h-full bg-card border-r border-border transition-all duration-300 ${
-        collapsed ? "w-16" : "w-64"
-      } relative`}
+      className={`group h-full bg-card border-r border-border transition-all duration-300 ${collapsed ? "w-16" : "w-64"
+        } relative`}
     >
       {/* Header with Toggle Button */}
       <div
-        className={`flex items-center justify-between p-3 border-b border-border ${
-          collapsed ? "justify-center" : ""
-        }`}
+        className={`flex items-center justify-between p-3 border-b border-border ${collapsed ? "justify-center" : ""
+          }`}
       >
         {!collapsed && (
           <h2 className="text-lg font-semibold text-foreground">Menu</h2>
@@ -273,9 +267,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
           variant="ghost"
           size="sm"
           onClick={toggleSidebar}
-          className={`h-8 w-8 p-0 hover:bg-secondary flex-shrink-0 ${
-            collapsed ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-          } transition-opacity duration-200`}
+          className={`h-8 w-8 p-0 hover:bg-secondary flex-shrink-0 ${collapsed ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+            } transition-opacity duration-200`}
         >
           <Menu size={16} className="text-muted-foreground" />
         </Button>

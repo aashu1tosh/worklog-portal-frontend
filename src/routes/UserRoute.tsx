@@ -68,7 +68,7 @@ export const userRoute = [
         element: <Worklog />,
       },
       {
-        path: "worklog",
+        path: "settings/update-password",
         element: <UpdatePassword />,
       },
       {
