@@ -1,5 +1,6 @@
 import Admin from "@/pages/dashboard/admin/Admin";
 import Company from "@/pages/dashboard/company/Company";
+import UpdatePassword from "@/pages/dashboard/update-password/UpdatePassword";
 import Worklog from "@/pages/dashboard/worklog/Worklog";
 import PageNotFound from "@/pages/PageNotFound";
 import { ProtectedRoute } from "@/ProtectedRoute";
@@ -20,7 +21,10 @@ const CompanyAdmin = LazyLoading(
 );
 
 const CompanyEmployee = LazyLoading(
-  lazy(async () => await import("@/pages/dashboard/company-employee/CompanyEmployee"))
+  lazy(
+    async () =>
+      await import("@/pages/dashboard/company-employee/CompanyEmployee")
+  )
 );
 export const userRoute = [
   {
@@ -59,9 +63,13 @@ export const userRoute = [
         path: "employee-management",
         element: <CompanyEmployee />,
       },
-            {
+      {
         path: "worklog",
         element: <Worklog />,
+      },
+      {
+        path: "worklog",
+        element: <UpdatePassword />,
       },
       {
         path: "*",

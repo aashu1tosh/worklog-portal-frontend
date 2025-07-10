@@ -12,13 +12,16 @@ import {
   ChevronDown,
   ChevronRight,
   FerrisWheel,
+  GitBranch,
   Home,
   IdCardLanyard,
+  Lock,
   Menu,
   ScanSearchIcon,
   Settings,
   Shield,
   ShieldUser,
+  User,
 } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -133,20 +136,24 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
       title: "Settings",
       children: [
         {
+          icon: <User size={16} />,
           title: "General",
           url: "/dashboard/settings/general",
         },
         {
+          icon: <Lock size={16} />,
           title: "Security",
-          url: "/dashboard/settings/security",
+          url: "/dashboard/settings/update-password",
         },
         {
+          icon: <GitBranch size={16} />,
           title: "Version Control",
           url: "/dashboard/settings/maintain-version",
         },
       ],
     },
   ];
+
   // Render menu item
   const renderMenuItem = (
     item: MenuItem,
@@ -228,7 +235,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
         } transition-colors`}
         onClick={() => handleItemClick(item?.url, item?.title)}
       >
-        {!isChild && (
+        {/* Show icon for both parent and child items */}
+        {item?.icon && (
           <span
             className={`flex-shrink-0 ${
               isActive ? "text-primary-foreground" : "text-muted-foreground"

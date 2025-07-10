@@ -104,10 +104,11 @@ const useAPI = <T>() => {
     }
   };
 
-  const patch = async (endPoint: string, id: string, data?: Partial<T>) => {
+  const patch = async (endPoint: string, id?: string, data?: Partial<T>) => {
     try {
+      const url = id ? `${endPoint}/${id}` : endPoint;
       const response = await PrivateAxiosInstance.patch(
-        `${endPoint}/${id}`,
+        url,
         data
       );
       return {
