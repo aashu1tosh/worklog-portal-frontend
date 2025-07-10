@@ -188,10 +188,10 @@ function DataTable<TData, TValue>({
       </div>
 
       {/* Table Section */}
-      <Card>
+      <Card className="overflow-y-auto">
         <div className="relative">
           {/* Loading Overlay */}
-          {loading && (
+          {(loading || pagination?.refreshTable) && (
             <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80 backdrop-blur-sm">
               <div className="flex items-center space-x-2">
                 <Loader2 className="h-4 w-4 animate-spin" />

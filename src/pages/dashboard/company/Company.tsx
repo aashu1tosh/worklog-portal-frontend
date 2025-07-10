@@ -9,7 +9,7 @@ import ShowCompany from "@/pages/dashboard/company/ShowCompany";
 
 
 const Company = () => {
-  DocumentTitle("Login Log Page");
+  DocumentTitle("Company Page");
   const [pagination, setPagination] = usePagination();
 
   const { isLoading, error, values, addOpen, setAddOpen, selectedId, setSelectedId } = useDataFetch<ICompany>({

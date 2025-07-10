@@ -5,6 +5,7 @@ const TableAction = ({
   onEdit,
   onDelete,
   hideShow,
+  disableShow,
   hideEdit,
   hideDelete,
   disableDelete,
@@ -13,6 +14,7 @@ const TableAction = ({
   onShow?: () => void
   onEdit?: () => void
   onDelete?: () => void
+  disableShow?: boolean
   hideShow?: boolean
   hideEdit?: boolean
   hideDelete?: boolean
@@ -21,7 +23,14 @@ const TableAction = ({
 }) => {
   return (
     <div className='flex  justify-center gap-2'>
-      {onShow !== undefined && !hideShow && (
+
+      { disableShow ? (
+        <div className='bg-complementary  p-[7px]  rounded-[4px] cursor-not-allowed transition-all duration-200'>
+          <Eye className='h-[13px] w-[13px] text-white  dark:text-yellow-700' />
+        </div>
+      ) : (
+
+      onShow !== undefined && !hideShow && (
         <div
           onClick={() => {
             onShow()
@@ -30,7 +39,9 @@ const TableAction = ({
         >
           <Eye className='h-[13px] w-[13px] text-white  dark:text-yellow-700' />
         </div>
+      )
       )}
+
       {disableUpdate ? (
         <div className='bg-primary  p-[7px]  rounded-[4px] cursor-not-allowed transition-all duration-200'>
           <Edit className='h-[13px] w-[13px] text-white  dark:text-red-700' />

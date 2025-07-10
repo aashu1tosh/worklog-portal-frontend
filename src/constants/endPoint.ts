@@ -5,6 +5,7 @@ export const endPoint = {
         logout: '/auth/logout',
         isAuthenticated: '/auth/is-authenticated',
         refreshToken: '/auth/public/refresh-token',
+        updatePassword: "/auth/update-password",
     },
     // ADMIN
     admin: {
@@ -13,8 +14,11 @@ export const endPoint = {
 
     company: {
         company: '/company',
+        companyAdmin: '/company/admin',
+        companyEmployee: '/company/employee',
+        worklog: '/company/worklog',
     },
-    
+
     loginLog: {
         getLoginLog: '/login-log',
         logoutById: '/login-log/logout',

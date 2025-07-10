@@ -76,8 +76,6 @@ const AddCompany = ({ open, setOpen, selectedId }: IProps) => {
         }
     }, [selectedId])
 
-    console.log('selectedId', selectedId)
-
     const onSubmit = async (data: ICompany) => {
 
         await handleFormSubmission({

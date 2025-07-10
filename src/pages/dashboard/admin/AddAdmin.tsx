@@ -43,8 +43,6 @@ const AddCompany = ({ open, setOpen, selectedId }: IProps) => {
         defaultValues,
     })
 
-    console.log('selectedId', selectedId)
-
     const onSubmit = async (data: IAdminForm) => {
         const payload = {
             firstName: data.firstName,
@@ -138,7 +136,6 @@ const AddCompany = ({ open, setOpen, selectedId }: IProps) => {
                     {...register('confirmPassword')}
                 />
             </div>
-
         </Modal>
     )
 }

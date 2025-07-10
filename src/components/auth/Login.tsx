@@ -45,7 +45,6 @@ const Login = () => {
 
     const loginFn = async (data: { email: string; password: string; }) => {
         const response = await post(endPoint?.auth?.login, data)
-        console.log("🚀 ~ loginFn ~ response:", response)
         if (!response?.status) throw new Error(response?.message)
         return response
     }

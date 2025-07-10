@@ -61,10 +61,6 @@ export function useDataFetch<T>({
   }, [data])
 
   useEffect(() => {
-    console.log('useDataFetch: pagination.refreshTable changed:', pagination.refreshTable)
-  }, [pagination.refreshTable])
-
-  useEffect(() => {
     if (selectedId) setAddOpen(true)
   }, [selectedId])
 

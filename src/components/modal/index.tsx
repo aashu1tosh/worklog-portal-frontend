@@ -72,7 +72,7 @@ const Modal = ({
       case "sm":
         return "lg:w-1/3 md:w-[60%] w-[95%] max-w-md";
       case "md":
-        return "lg:w-1/2 md:w-[80%] w-[95%] max-w-2xl"; // Fixed: was md:[80%]
+        return "lg:w-1/2 md:w-[82%] w-[95%] max-w-2xl"; // Fixed: was md:[80%]
       case "lg":
         return "lg:w-2/3 md:w-[85%] w-[95%] max-w-4xl";
       case "xl":
@@ -85,12 +85,12 @@ const Modal = ({
   };
 
   return createPortal(
-    <div className="fixed inset-0 modal z-[999] flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 modal z-[99] flex items-center justify-center p-3 bg-black bg-opacity-50">
       <div
         ref={closeOnOutsideClick ? modalRef : null}
-        className={`bg-white  dark:bg-dark-foreground  dark:border dark:border-gray-700 dark:text-slate-300 rounded-[4px] shadow-lg ${getModalSizeClasses(
+        className={`bg-background  dark:bg-dark-foreground  dark:border dark:border-gray-700 dark:text-slate-300 rounded-[4px] shadow-lg ${getModalSizeClasses(
           size
-        )}  py-4 pl-4`}
+        )}  py-4 pl-4  animate-slideDown`}
       >
         {title && !hideCloseButton && (
           <div className="flex justify-between mb-4 mr-4">
@@ -114,18 +114,17 @@ const Modal = ({
             e?.preventDefault();
           }}
         >
-          <div className="max-h-[80vh] overflow-y-auto pr-4 pb-2">
+          <div className="max-h-[80vh] overflow-y-auto pl-1 pr-3 pb-2">
             {children}
           </div>
           {showFooter && (
             <div className="mt-4 gap-2 flex justify-end pr-4">
               {footerButton && (
                 <CancelButton
-                  className={`${
-                    type === "DELETE"
-                      ? "bg-white dark:bg-transparent border-primary text-primary hover:bg-transparent  hover:text-primary dark:text-slate-400 dark:border-slate-400 "
-                      : ""
-                  }`}
+                  className={`${type === "DELETE"
+                    ? "bg-white dark:bg-transparent border-primary text-primary hover:bg-transparent  hover:text-primary dark:text-slate-400 dark:border-slate-400 "
+                    : ""
+                    }`}
                   onClick={handleModalClose}
                 />
               )}

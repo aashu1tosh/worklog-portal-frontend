@@ -8,21 +8,29 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Role } from "@/constants/enum";
 import useAuth from "@/hooks/useAuth";
 import {
+  Building2,
   ChevronDown,
   ChevronRight,
+  FerrisWheel,
+  GitBranch,
   Home,
+  IdCardLanyard,
+  Lock,
   Menu,
+  ScanSearchIcon,
   Settings,
   Shield,
+  ShieldUser,
+  User,
 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 interface MenuItem {
   icon?: ReactNode;
   title: string;
   url?: string;
-  roles?: string[];
+  roles?: Role[];
   children?: MenuItem[];
 }
 
@@ -32,57 +40,15 @@ interface SidebarProps {
   isCollapsed?: boolean;
 }
 
-const menuItems: MenuItem[] = [
-  {
-    icon: <Home size={18} />,
-    title: "Dashboard",
-    url: "/dashboard/home",
-  },
-  {
-    icon: <Shield size={18} />,
-    title: "Login Log",
-    url: "/dashboard/login-log",
-  },
-  {
-    icon: <Shield size={18} />,
-    title: "Company",
-    url: "/dashboard/company",
-    roles: [Role.ADMIN, Role.SUDO_ADMIN],
-  },
-  {
-    icon: <Shield size={18} />,
-    title: "Admin Dashboard",
-    url: "/dashboard/admin",
-    roles: [Role.ADMIN, Role.SUDO_ADMIN],
-  },
-  {
-    icon: <Settings size={18} />,
-    title: "Settings",
-    children: [
-      {
-        title: "General",
-        url: "/dashboard/settings/general",
-      },
-      {
-        title: "Security",
-        url: "/dashboard/settings/security",
-      },
-      {
-        title: "Version Control",
-        url: "/dashboard/settings/maintain-version",
-      },
-    ],
-  },
-];
-
-const Sidebar: React.FC<SidebarProps> = ({
-  items = menuItems,
-  isCollapsed = false,
-}) => {
+const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
   const navigate = useNavigate();
   const pathname = useLocation();
   const { authData } = useAuth();
-  const userRole = authData?.role;
+  const userRole = useMemo(() => authData?.role, [authData?.role]);
+  const companyId = useMemo(
+    () => authData?.companyAdmin?.company?.id,
+    [authData?.companyAdmin?.company?.id]
+  );
 
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const [collapsed, setCollapsed] = useState<boolean>(isCollapsed);
@@ -93,9 +59,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   // Check if user has required role
-  const hasRequiredRole = (itemRoles?: string[]): boolean => {
-    if (!itemRoles || itemRoles.length === 0) return true;
-    return itemRoles.includes(userRole);
+  const hasRequiredRole = (itemRoles?: Role[]): boolean => {
+    if (!itemRoles || itemRoles?.length === 0) return true;
+    return itemRoles.includes(userRole as Role);
   };
 
   // Toggle submenu open/close
@@ -117,6 +83,76 @@ const Sidebar: React.FC<SidebarProps> = ({
       toggleSubmenu(title);
     }
   };
+
+  const items: MenuItem[] = [
+    {
+      icon: <Home size={18} />,
+      title: "Dashboard",
+      url: "/dashboard/home",
+    },
+    {
+      icon: <Building2 size={18} />,
+      title: "Company",
+      url: "/dashboard/company",
+      roles: [Role.ADMIN, Role.SUDO_ADMIN],
+    },
+    {
+      icon: <ShieldUser size={18} />,
+      title: "Admin Dashboard",
+      url: "/dashboard/admin",
+      roles: [Role.ADMIN, Role.SUDO_ADMIN],
+    },
+    {
+      icon: <IdCardLanyard size={18} />,
+      title: "Employee Management",
+      url: `/dashboard/employee-management`,
+      roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
+    },
+    {
+      icon: <ShieldUser size={18} />,
+      title: "Admin Dashboard",
+      url: `/dashboard/company-admin-management/${companyId}`,
+      roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
+    },
+    {
+      icon: <FerrisWheel size={18} />,
+      title: "Worklog",
+      url: `/dashboard/worklog`,
+      roles: [Role.COMPANY_EMPLOYEE],
+    },
+    {
+      icon: <ScanSearchIcon size={18} />,
+      title: "Worklog",
+      url: `/dashboard/admin-worklog`,
+      roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
+    },
+    {
+      icon: <Settings size={18} />,
+      title: "Settings",
+      children: [
+        {
+          icon: <User size={16} />,
+          title: "General",
+          url: "/dashboard/settings/general",
+        },
+        {
+          icon: <Lock size={16} />,
+          title: "Update Password",
+          url: "/dashboard/settings/update-password",
+        },
+        {
+          icon: <Shield size={18} />,
+          title: "Login Log",
+          url: "/dashboard/settings/login-log",
+        },
+        {
+          icon: <GitBranch size={16} />,
+          title: "Version Control",
+          url: "/dashboard/settings/maintain-version",
+        },
+      ],
+    },
+  ];
 
   // Render menu item
   const renderMenuItem = (
@@ -144,7 +180,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 : collapsed
                   ? "justify-center px-0"
                   : "justify-start gap-3"
-                } hover:bg-secondary text-secondary-foreground transition-colors`}
+                } hover:bg-accent text-secondary-foreground transition-colors`}
               onClick={() => handleItemClick(undefined, item?.title)}
             >
               {!isChild && (
@@ -158,9 +194,15 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {item?.title}
                   </span>
                   {isOpen ? (
-                    <ChevronDown size={16} className="text-muted-foreground flex-shrink-0" />
+                    <ChevronDown
+                      size={16}
+                      className="text-muted-foreground flex-shrink-0"
+                    />
                   ) : (
-                    <ChevronRight size={16} className="text-muted-foreground flex-shrink-0" />
+                    <ChevronRight
+                      size={16}
+                      className="text-muted-foreground flex-shrink-0"
+                    />
                   )}
                 </>
               )}
@@ -186,15 +228,14 @@ const Sidebar: React.FC<SidebarProps> = ({
             : "justify-start gap-3"
           } ${isActive
             ? "bg-primary text-primary-foreground border-r-2 border-primary"
-            : "hover:bg-secondary text-secondary-foreground"
+            : "hover:bg-accent text-secondary-foreground"
           } transition-colors`}
         onClick={() => handleItemClick(item?.url, item?.title)}
       >
-        {!isChild && (
+        {/* Show icon for both parent and child items */}
+        {item?.icon && (
           <span
-            className={`flex-shrink-0 ${isActive
-              ? "text-primary-foreground"
-              : "text-muted-foreground"
+            className={`flex-shrink-0 ${isActive ? "text-primary-foreground" : "text-muted-foreground"
               }`}
           >
             {item.icon}
@@ -215,8 +256,10 @@ const Sidebar: React.FC<SidebarProps> = ({
         } relative`}
     >
       {/* Header with Toggle Button */}
-      <div className={`flex items-center justify-between p-3 border-b border-border ${collapsed ? "justify-center" : ""
-        }`}>
+      <div
+        className={`flex items-center justify-between p-3 border-b border-border ${collapsed ? "justify-center" : ""
+          }`}
+      >
         {!collapsed && (
           <h2 className="text-lg font-semibold text-foreground">Menu</h2>
         )}

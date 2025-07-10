@@ -1,5 +1,5 @@
 .loader {
-  color: #000;
+  color: hsl(var(--primary-color));
   width: 4px;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -15,6 +15,7 @@ button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
 }
+
 input:disabled {
   cursor: not-allowed;
   pointer-events: all !important;

@@ -1,5 +1,7 @@
 import Admin from "@/pages/dashboard/admin/Admin";
 import Company from "@/pages/dashboard/company/Company";
+import UpdatePassword from "@/pages/dashboard/update-password/UpdatePassword";
+import Worklog from "@/pages/dashboard/worklog/Worklog";
 import PageNotFound from "@/pages/PageNotFound";
 import { ProtectedRoute } from "@/ProtectedRoute";
 import { lazy } from "react";
@@ -14,7 +16,16 @@ const Dashboard = LazyLoading(
 const LoginLog = LazyLoading(
   lazy(async () => await import("@/pages/dashboard/loginlog/LoginLog"))
 );
+const CompanyAdmin = LazyLoading(
+  lazy(async () => await import("@/pages/dashboard/company-admin/CompanyAdmin"))
+);
 
+const CompanyEmployee = LazyLoading(
+  lazy(
+    async () =>
+      await import("@/pages/dashboard/company-employee/CompanyEmployee")
+  )
+);
 export const userRoute = [
   {
     path: "dashboard",
@@ -33,16 +44,33 @@ export const userRoute = [
         element: <Dashboard />,
       },
       {
-        path: "login-log",
-        element: <LoginLog />,
-      },
-      {
         path: "company",
         element: <Company />,
       },
       {
         path: "admin",
         element: <Admin />,
+      },
+      {
+        path: "company-admin-management/:id",
+        element: <CompanyAdmin />,
+      },
+      {
+        path: "employee-management",
+        element: <CompanyEmployee />,
+      },
+      {
+        path: "worklog",
+        element: <Worklog />,
+      },
+      {
+        path: "settings/update-password",
+        element: <UpdatePassword />,
+
+      },
+      {
+        path: "settings/login-log",
+        element: <LoginLog />,
       },
       {
         path: "*",
