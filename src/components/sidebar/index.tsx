@@ -8,12 +8,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Role } from "@/constants/enum";
 import useAuth from "@/hooks/useAuth";
 import {
+  Building2,
   ChevronDown,
   ChevronRight,
+  FerrisWheel,
   Home,
+  IdCardLanyard,
   Menu,
+  ScanSearchIcon,
   Settings,
   Shield,
+  ShieldUser,
 } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -88,37 +93,37 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
       url: "/dashboard/login-log",
     },
     {
-      icon: <Shield size={18} />,
+      icon: <Building2 size={18} />,
       title: "Company",
       url: "/dashboard/company",
       roles: [Role.ADMIN, Role.SUDO_ADMIN],
     },
     {
-      icon: <Shield size={18} />,
+      icon: <ShieldUser size={18} />,
       title: "Admin Dashboard",
       url: "/dashboard/admin",
       roles: [Role.ADMIN, Role.SUDO_ADMIN],
     },
     {
-      icon: <Shield size={18} />,
+      icon: <IdCardLanyard size={18} />,
       title: "Employee Management",
       url: `/dashboard/employee-management`,
       roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
     },
     {
-      icon: <Shield size={18} />,
+      icon: <ShieldUser size={18} />,
       title: "Admin Dashboard",
       url: `/dashboard/company-admin-management/${companyId}`,
       roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
     },
     {
-      icon: <Shield size={18} />,
+      icon: <FerrisWheel size={18} />,
       title: "Worklog",
       url: `/dashboard/worklog`,
       roles: [Role.COMPANY_EMPLOYEE],
     },
     {
-      icon: <Shield size={18} />,
+      icon: <ScanSearchIcon size={18} />,
       title: "Worklog",
       url: `/dashboard/admin-worklog`,
       roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
