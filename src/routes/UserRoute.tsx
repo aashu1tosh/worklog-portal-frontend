@@ -1,5 +1,6 @@
 import Admin from "@/pages/dashboard/admin/Admin";
 import Company from "@/pages/dashboard/company/Company";
+import EmployeeWorklogs from "@/pages/dashboard/employee-worklogs/EmployeeWorklogs";
 import UpdatePassword from "@/pages/dashboard/update-password/UpdatePassword";
 import Worklog from "@/pages/dashboard/worklog/Worklog";
 import PageNotFound from "@/pages/PageNotFound";
@@ -64,9 +65,12 @@ export const userRoute = [
         element: <Worklog />,
       },
       {
+        path: "employee-worklogs",
+        element: <EmployeeWorklogs />,
+      },
+      {
         path: "settings/update-password",
         element: <UpdatePassword />,
-
       },
       {
         path: "settings/login-log",

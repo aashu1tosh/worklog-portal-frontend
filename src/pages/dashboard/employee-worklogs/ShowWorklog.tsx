@@ -1,6 +1,9 @@
+import GenericAPISelect from "@/components/select/GenericApiSelect";
 import Table from "@/components/table";
 import TableAction from "@/components/table/TableAction";
+import { endPoint } from "@/constants/endPoint";
 import { formatDateTime } from "@/helpers/formatDateTime";
+import type { ICompanyEmployee } from "@/interfaces/company/companyEmployee.interface";
 import type { IWorklog } from "@/interfaces/company/worklog/worklog.interface";
 import type { IPagination } from "@/interfaces/pagination.interface";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -15,6 +18,8 @@ interface IProps {
   setAddOpen?: (data: boolean) => void;
   selectedId?: string | null;
   setSelectedId?: (data: string | null) => void;
+  setEmployeeId?: (data: string | null) => void;
+  employeeId?: string | null;
 }
 
 const ShowWorklog = (props: IProps) => {
@@ -22,8 +27,9 @@ const ShowWorklog = (props: IProps) => {
     loading,
     values,
     pagination,
+    employeeId,
+    setEmployeeId,
     setPagination,
-    setAddOpen,
     setSelectedId,
   } = props;
 
@@ -63,16 +69,32 @@ const ShowWorklog = (props: IProps) => {
 
   return (
     <div>
-      <Table
-        loading={loading}
-        columns={columns}
-        data={values ?? []}
-        pagination={pagination}
-        setPagination={setPagination}
-        addButtonLabel="Add Worklog"
-        setAddOpen={setAddOpen}
-        tableSearch={false}
-      />
+      {
+        employeeId ?
+
+          <Table
+            loading={loading}
+            columns={columns}
+            data={values ?? []}
+            pagination={pagination}
+            setPagination={setPagination}
+          /> :
+          <div>
+            <GenericAPISelect<ICompanyEmployee>
+              key={'employee-select'}
+              required
+              value={employeeId ?? ''}
+              handleChange={(e: string) => {
+                setEmployeeId && setEmployeeId(e);
+              }}
+              label={'Select a employee'}
+              endpoint={endPoint.company.companyEmployee}
+              queryParams={{ page: 1, limit: 5 }}
+              extractName={(i: ICompanyEmployee) => i?.firstName + ' ' + i?.lastName}
+              extractId={(i: ICompanyEmployee) => i?.id ?? ''}
+            />
+          </div>
+      }
     </div>
   );
 };

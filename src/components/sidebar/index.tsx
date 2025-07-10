@@ -122,8 +122,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
     },
     {
       icon: <ScanSearchIcon size={18} />,
-      title: "Worklog",
-      url: `/dashboard/admin-worklog`,
+      title: "Employee Worklogs",
+      url: `/dashboard/employee-worklogs`,
       roles: [Role.COMPANY_ADMIN, Role.COMPANY_SUPER_ADMIN],
     },
     {
