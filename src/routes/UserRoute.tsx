@@ -44,10 +44,6 @@ export const userRoute = [
         element: <Dashboard />,
       },
       {
-        path: "login-log",
-        element: <LoginLog />,
-      },
-      {
         path: "company",
         element: <Company />,
       },
@@ -70,6 +66,11 @@ export const userRoute = [
       {
         path: "settings/update-password",
         element: <UpdatePassword />,
+
+      },
+      {
+        path: "settings/login-log",
+        element: <LoginLog />,
       },
       {
         path: "*",

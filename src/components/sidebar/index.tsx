@@ -91,11 +91,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
       url: "/dashboard/home",
     },
     {
-      icon: <Shield size={18} />,
-      title: "Login Log",
-      url: "/dashboard/login-log",
-    },
-    {
       icon: <Building2 size={18} />,
       title: "Company",
       url: "/dashboard/company",
@@ -144,6 +139,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
           icon: <Lock size={16} />,
           title: "Update Password",
           url: "/dashboard/settings/update-password",
+        },
+        {
+          icon: <Shield size={18} />,
+          title: "Login Log",
+          url: "/dashboard/settings/login-log",
         },
         {
           icon: <GitBranch size={16} />,
