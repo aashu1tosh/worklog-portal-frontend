@@ -206,7 +206,7 @@ const Navbar = () => {
             <DropdownMenuContent align="end" className="w-56 bg-popover border-border">
               <DropdownMenuLabel className="text-popover-foreground">My Account</DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-border" />
-              <DropdownMenuItem className="text-popover-foreground hover:bg-secondary cursor-pointer">
+              <DropdownMenuItem className="text-popover-foreground hover:bg-secondary cursor-pointer" onClick={() => navigate('/dashboard/profile')}>
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>
               </DropdownMenuItem>

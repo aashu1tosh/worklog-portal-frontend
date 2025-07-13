@@ -1,13 +1,32 @@
-import Admin from "@/pages/dashboard/admin/Admin";
-import Company from "@/pages/dashboard/company/Company";
-import EmployeeWorklogs from "@/pages/dashboard/employee-worklogs/EmployeeWorklogs";
-import UpdatePassword from "@/pages/dashboard/update-password/UpdatePassword";
-import Worklog from "@/pages/dashboard/worklog/Worklog";
-import PageNotFound from "@/pages/PageNotFound";
 import { ProtectedRoute } from "@/ProtectedRoute";
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import LazyLoading from "../LazyLoading";
+
+const Admin = LazyLoading(
+  lazy(async () => await import("@/pages/dashboard/admin/Admin"))
+);
+const Company = LazyLoading(
+  lazy(async () => await import("@/pages/dashboard/company/Company"))
+);
+const EmployeeWorklogs = LazyLoading(
+  lazy(
+    async () =>
+      await import("@/pages/dashboard/employee-worklogs/EmployeeWorklogs")
+  )
+);
+const Profile = LazyLoading(
+  lazy(async () => await import("@/pages/dashboard/profile/Profile"))
+);
+const UpdatePassword = LazyLoading(
+  lazy(async () => await import("@/pages/dashboard/update-password/UpdatePassword"))
+);
+const Worklog = LazyLoading(
+  lazy(async () => await import("@/pages/dashboard/worklog/Worklog"))
+);
+const PageNotFound = LazyLoading(
+  lazy(async () => await import("@/pages/PageNotFound"))
+);
 const DashboardTemplate = LazyLoading(
   lazy(async () => await import("@/templates/Dashboard.template"))
 );
@@ -75,6 +94,10 @@ export const userRoute = [
       {
         path: "settings/login-log",
         element: <LoginLog />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
       {
         path: "*",
