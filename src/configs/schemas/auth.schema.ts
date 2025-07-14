@@ -7,13 +7,13 @@ export const numberRegex = /\d/
 export const specialCharacterRegex = /[@$!%*?&#]/
 
 export const LoginSchema = () => {
-    return Yup.object().shape({
-        email: Yup.string()
-            .required('Email is required')
-            .email('Invalid email address'),
-        password: Yup.string()
-            .required('Password is required')
-    })
+  return Yup.object().shape({
+    email: Yup.string()
+      .required('Email is required')
+      .email('Invalid email address'),
+    password: Yup.string()
+      .required('Password is required')
+  })
 }
 
 export const updatePasswordSchema = Yup.object({
@@ -28,6 +28,19 @@ export const updatePasswordSchema = Yup.object({
     .oneOf([Yup.ref('newPassword')], 'Passwords do not match')
     .required('Confirm password is required'),
 })
+
+export const updateProfileSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .required('First name is required'),
+  lastName: Yup.string()
+    .required('Last name is required'),
+})
+
+export interface IUpdateProfile {
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+}
 
 
 

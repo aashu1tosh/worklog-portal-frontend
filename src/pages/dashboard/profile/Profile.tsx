@@ -1,72 +1,140 @@
 import ProfilePicture from "@/components/profilePicture/ProfilePicture";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { updateProfileSchema, type IUpdateProfile } from "@/configs/schemas/auth.schema";
 import { DocumentTitle } from "@/functions/DocumentTitle";
 import useAuth from "@/hooks/useAuth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { CloudCheck, Phone, UserRound } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { IoMailOutline } from "react-icons/io5";
 
 const Profile = () => {
-  DocumentTitle("Profile Page");
-  const { authData } = useAuth();
+    DocumentTitle("Profile Page");
+    const { authData } = useAuth();
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { isSubmitting, errors },
-  } = useForm({
-    defaultValues: {},
-  });
+    const {
+        register,
+        handleSubmit,
+        watch,
+        reset,
+        formState: { isSubmitting, errors },
+    } = useForm<IUpdateProfile>({
+        defaultValues: {},
+        resolver: yupResolver(updateProfileSchema),
+    });
 
-  useEffect(() => {
-    if (authData) {
-      reset({
-        firstName:
-          authData.admin?.firstName ||
-          authData?.companyAdmin?.firstName ||
-          authData?.companyEmployee?.firstName ||
-          "",
-        middleName:
-          authData.admin?.firstName ||
-          authData?.companyAdmin?.firstName ||
-          authData?.companyEmployee?.firstName ||
-          "",
-        lastName:
-          authData.admin?.firstName ||
-          authData?.companyAdmin?.firstName ||
-          authData?.companyEmployee?.firstName ||
-          "",
-      });
-    }
-  }, [authData]);
+    useEffect(() => {
+        if (authData) {
+            reset({
+                firstName:
+                    authData.admin?.firstName ||
+                    authData?.companyAdmin?.firstName ||
+                    authData?.companyEmployee?.firstName ||
+                    "",
+                middleName:
+                    authData.admin?.middleName ||
+                    authData?.companyAdmin?.middleName ||
+                    authData?.companyEmployee?.middleName ||
+                    "",
+                lastName:
+                    authData.admin?.lastName ||
+                    authData?.companyAdmin?.lastName ||
+                    authData?.companyEmployee?.lastName ||
+                    "",
+            });
+        }
+    }, [authData]);
 
-  return (
-    <div className="">
-        <div className="flex flex-col gap-y-3 md:h-10 md:flex-row md:items-center">
-          <div className="text-lg font-medium group-[.mode--light]:text-white">
-            Your Profile
-          </div>
-        </div>
-
-        <ProfilePicture />
-        <div className="mt-3.5">
-          <div className="flex flex-col">
-            <div className="px-7">
-              <form onSubmit={() => {}}>
-
-
-                <div className="p-7 mt-6 flex border-t border-dashed border-slate-300/70 md:justify-end">
-                  <Button type="submit" className="px-4 w-auto">
-                    Save Changes
-                  </Button>
+    return (
+        <div className="">
+            <div className="flex flex-col gap-y-3 md:h-10 md:flex-row md:items-center">
+                <div className="text-lg font-medium group-[.mode--light]:text-white">
+                    Your Profile
                 </div>
-              </form>
+            </div>
+
+
+            <div className="flex flex-col">
+                <div className="px-7">
+                    <div className="flex justify-start items-center gap-x-4 py-6">
+                        <ProfilePicture />
+                    </div>
+
+                    <form onSubmit={() => { }}>
+
+                        <div className="flex flex-col gap-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <Input
+                                    label="First Name"
+                                    required
+                                    error={errors?.firstName}
+                                    placeholder="Enter your first name"
+                                    icon={<UserRound size={14} />}
+                                    {...register('firstName')}
+                                />
+
+                                <Input
+                                    label="Middle Name"
+                                    required
+                                    error={errors?.middleName}
+                                    placeholder="Enter your middle name"
+                                    icon={<UserRound size={14} />}
+                                    {...register('middleName')}
+                                />
+
+
+                                <Input
+                                    label="Last Name"
+                                    required
+                                    error={errors?.lastName}
+                                    placeholder="Enter your last name"
+                                    icon={<UserRound size={14} />}
+                                    {...register('lastName')}
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <Input
+                                    label="Email Address"
+                                    value={authData?.email}
+                                    icon={<IoMailOutline />}
+                                    readOnly
+                                    disabled
+
+                                />
+
+                                <Input
+                                    label="Phone Number"
+                                    value={authData?.phone}
+                                    icon={<Phone size={14} />}
+                                    readOnly
+                                    disabled
+
+                                />
+
+                                <Input
+                                    label="Role"
+                                    icon={<CloudCheck size={14} />}
+                                    value={authData?.role?.replace(/_/g, ' ') || ''}
+                                    readOnly
+                                    disabled
+                                />
+                            </div>
+
+                        </div>
+
+                        <div className="p-7 mt-6 flex border-t border-dashed border-slate-300/70 md:justify-end">
+                            <Button type="submit" className="px-4 w-auto">
+                                Save Changes
+                            </Button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Profile;
