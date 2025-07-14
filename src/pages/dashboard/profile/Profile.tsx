@@ -126,8 +126,8 @@ const Profile = () => {
                         </div>
 
                         <div className="p-7 mt-6 flex border-t border-dashed border-slate-300/70 md:justify-end">
-                            <Button type="submit" className="px-4 w-auto">
-                                Save Changes
+                            <Button type="submit" className="px-4 w-auto" disabled={isSubmitting}>
+                                {isSubmitting ? "Saving " : "Save Changes"}
                             </Button>
                         </div>
                     </form>
