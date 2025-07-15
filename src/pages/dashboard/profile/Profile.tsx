@@ -59,6 +59,13 @@ const Profile = () => {
                     authData?.companyEmployee?.lastName ||
                     "",
             });
+
+            if (authData.media && authData.media.length > 0) {
+                setMedia((prevState) => ({
+                    ...prevState,
+                    mediaGroup: authData.media || [],
+                }));
+            }
         }
     }, [authData]);
 
@@ -68,11 +75,12 @@ const Profile = () => {
 
         const mediaResponse = await mediaUploadFn(media?.selectedFiles, MediaType?.PROFILE_PICTURE, "profile picture");
         const deleteMedia = getDeletedMediaIds(media?.deleteMedia)
+        console.log("🚀 ~ onSubmit ~ deleteMedia:", deleteMedia)
 
         const payload = {
             ...data,
             media: mediaResponse,
-            deletedMedia: deleteMedia,
+            deleteMedia: deleteMedia,
         };
 
         // ...req,
@@ -170,6 +178,14 @@ const Profile = () => {
 
                         </div>
 
+                        <FileUpload
+                            title={'Profile picture'}
+                            accept={['images']}
+                            appState={media}
+                            setAppState={setMedia}
+                            replace
+                        />
+
                         <div className="p-7 mt-6 flex border-t border-dashed border-slate-300/70 md:justify-end">
                             <Button type="submit" className="px-4 w-auto" disabled={isSubmitting}>
                                 {isSubmitting ? "Saving " : "Save Changes"}
@@ -177,13 +193,7 @@ const Profile = () => {
                         </div>
                     </form>
 
-                    <FileUpload
-                        title={'Profile picture'}
-                        accept={['images']}
-                        appState={media}
-                        setAppState={setMedia}
-                        replace
-                    />
+
                 </div>
             </div>
         </div>
