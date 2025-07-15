@@ -1,9 +1,15 @@
-import ProfilePicture from "@/components/profilePicture/ProfilePicture";
+import FileUpload from "@/components/media/MediaUpload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { updateProfileSchema, type IUpdateProfile } from "@/configs/schemas/auth.schema";
+import { endPoint } from "@/constants/endPoint";
+import { MediaType } from "@/constants/enum";
 import { DocumentTitle } from "@/functions/DocumentTitle";
+import { handleFormSubmission } from "@/functions/formSubmission";
+import { getDeletedMediaIds, mediaUploadFn } from "@/functions/mediaUpload";
+import useApiMutation from "@/hooks/useAPIMutation";
 import useAuth from "@/hooks/useAuth";
+import useMedia from "@/hooks/useMedia";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CloudCheck, Phone, UserRound } from "lucide-react";
 import { useEffect } from "react";
@@ -13,7 +19,15 @@ import { IoMailOutline } from "react-icons/io5";
 const Profile = () => {
     DocumentTitle("Profile Page");
     const { authData } = useAuth();
+    const [media, setMedia] = useMedia();
 
+    const { updateMutation } = useApiMutation<
+        Omit<IUpdateProfile, 'deletedMedia'> & {
+            deletedMedia: string[] | null
+        }
+    >({
+        endpoint: endPoint.auth?.profile,
+    })
     const {
         register,
         handleSubmit,
@@ -24,6 +38,7 @@ const Profile = () => {
         defaultValues: {},
         resolver: yupResolver(updateProfileSchema),
     });
+
 
     useEffect(() => {
         if (authData) {
@@ -47,6 +62,37 @@ const Profile = () => {
         }
     }, [authData]);
 
+    const onSubmit = async (data: IUpdateProfile) => {
+        // Handle form submission logic here
+        console.log("Form submitted with data:", data);
+
+        const mediaResponse = await mediaUploadFn(media?.selectedFiles, MediaType?.PROFILE_PICTURE, "profile picture");
+        const deleteMedia = getDeletedMediaIds(media?.deleteMedia)
+
+        const payload = {
+            ...data,
+            media: mediaResponse,
+            deletedMedia: deleteMedia,
+        };
+
+        // ...req,
+        // id: selectedValue?.id ?? '',
+        // media: mediaResponse ?? [],
+        // deletedMedia: deleteMedia,
+        await handleFormSubmission({
+            updateMutation: async () => {
+                await updateMutation.mutateAsync({
+                    id: "",
+                    data: payload,
+                });
+            },
+            reset: () => reset({}),
+            setOpen: (data: boolean) => console.log("Set open:", data),
+            isUpdate: true,
+        });
+
+    };
+
     return (
         <div className="">
             <div className="flex flex-col gap-y-3 md:h-10 md:flex-row md:items-center">
@@ -55,14 +101,13 @@ const Profile = () => {
                 </div>
             </div>
 
-
             <div className="flex flex-col">
                 <div className="px-7">
                     <div className="flex justify-start items-center gap-x-4 py-6">
-                        <ProfilePicture />
+                        {/* <ProfilePicture media={media} setMedia={setMedia} /> */}
                     </div>
 
-                    <form onSubmit={() => { }}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
 
                         <div className="flex flex-col gap-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -131,6 +176,14 @@ const Profile = () => {
                             </Button>
                         </div>
                     </form>
+
+                    <FileUpload
+                        title={'Profile picture'}
+                        accept={['images']}
+                        appState={media}
+                        setAppState={setMedia}
+                        replace
+                    />
                 </div>
             </div>
         </div>

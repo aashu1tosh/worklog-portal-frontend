@@ -189,7 +189,7 @@ const Navbar = () => {
                 className="flex items-center gap-2 h-auto p-2 hover:bg-secondary text-foreground"
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="" alt="User" />
+                  <AvatarImage src={authData?.media?.[0]?.path} alt="User" />
                   <AvatarFallback className="bg-primary text-primary-foreground uppercase">
                     {fullName}
                   </AvatarFallback>

@@ -5,3 +5,8 @@ export enum Role {
   COMPANY_SUPER_ADMIN = "COMPANY_SUPER_ADMIN",
   COMPANY_EMPLOYEE = "COMPANY_EMPLOYEE"
 }
+
+
+export enum MediaType {
+  PROFILE_PICTURE = "PROFILE_PICTURE",
+}
