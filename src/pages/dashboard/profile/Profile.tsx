@@ -31,7 +31,6 @@ const Profile = () => {
     const {
         register,
         handleSubmit,
-        watch,
         reset,
         formState: { isSubmitting, errors },
     } = useForm<IUpdateProfile>({
