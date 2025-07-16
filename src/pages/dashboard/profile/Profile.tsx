@@ -1,4 +1,4 @@
-import FileUpload from "@/components/media/MediaUpload";
+import ProfilePicture from "@/components/profilePicture/ProfilePicture";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { updateProfileSchema, type IUpdateProfile } from "@/configs/schemas/auth.schema";
@@ -82,10 +82,6 @@ const Profile = () => {
             deleteMedia: deleteMedia,
         };
 
-        // ...req,
-        // id: selectedValue?.id ?? '',
-        // media: mediaResponse ?? [],
-        // deletedMedia: deleteMedia,
         await handleFormSubmission({
             updateMutation: async () => {
                 await updateMutation.mutateAsync({
@@ -93,8 +89,6 @@ const Profile = () => {
                     data: payload,
                 });
             },
-            reset: () => reset({}),
-            setOpen: (data: boolean) => console.log("Set open:", data),
             isUpdate: true,
         });
 
@@ -111,7 +105,7 @@ const Profile = () => {
             <div className="flex flex-col">
                 <div className="px-7">
                     <div className="flex justify-start items-center gap-x-4 py-6">
-                        {/* <ProfilePicture media={media} setMedia={setMedia} /> */}
+                        <ProfilePicture media={media} setMedia={setMedia} />
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -176,14 +170,14 @@ const Profile = () => {
                             </div>
 
                         </div>
-
+                        {/* 
                         <FileUpload
                             title={'Profile picture'}
                             accept={['images']}
                             appState={media}
                             setAppState={setMedia}
                             replace
-                        />
+                        /> */}
 
                         <div className="p-7 mt-6 flex border-t border-dashed border-slate-300/70 md:justify-end">
                             <Button type="submit" className="px-4 w-auto" disabled={isSubmitting}>

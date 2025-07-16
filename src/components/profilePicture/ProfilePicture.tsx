@@ -1,6 +1,7 @@
 import type { AppState, IMedia } from "@/interfaces/media/media.interface";
-import { Eye, Pencil, User, X } from "lucide-react";
+import { Eye, Pencil, Trash2, User, X } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
+import { Button } from "../ui/button";
 
 interface IProps {
   media: AppState;
@@ -15,21 +16,6 @@ const ProfilePicture = ({ media, setMedia }: IProps) => {
     if (mediaInputRef.current) {
       mediaInputRef.current.click();
     }
-  };
-
-  const handleDeleteFile = (index: number) => {
-    setMedia((prevState) => ({
-      ...prevState,
-      selectedFiles: prevState.selectedFiles.filter((_item, i) => i !== index),
-    }));
-  };
-
-  const deleteMediaFile = (index: number, mediaItem: IMedia) => {
-    setMedia((prevState) => ({
-      ...prevState,
-      mediaGroup: prevState.mediaGroup.filter((_item, i) => i !== index),
-      deleteMedia: [...prevState.deleteMedia, mediaItem],
-    }));
   };
 
   const supported = useMemo(() => ['image/png', 'image/jpeg', 'image/jpg'], []);
@@ -90,18 +76,27 @@ const ProfilePicture = ({ media, setMedia }: IProps) => {
       setMedia((prevState) => ({
         ...prevState,
         mediaGroup: [],
-        deleteMedia: [...(prevState.deleteMedia as IMedia[]), currentImage.mediaItem as IMedia],
+        deleteMedia: [...(prevState.deleteMedia as IMedia[])],
       }));
     }
   };
 
+  const handleDelete = () => {
+    setMedia((prevState) => ({
+      ...prevState,
+      selectedFiles: [],
+      mediaGroup: [],
+      deleteMedia: [...(prevState.deleteMedia as IMedia[]), ...(prevState.mediaGroup)],
+    }));
+  }
+
   return (
     <>
-      <div className="flex items-center justify-center">
-        <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300">
-          <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-primary/10 bg-primary/5">
+      <div className="flex items-center justify-center gap-4">
+        <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300 flex items-center">
+          <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-primary/10 bg-primary/5 group">
             {currentImage?.url ? (
-              <div className="relative w-full h-full group">
+              <div className="relative w-full h-full">
                 <img
                   src={currentImage.url}
                   alt="Profile"
@@ -117,24 +112,35 @@ const ProfilePicture = ({ media, setMedia }: IProps) => {
                 {/* Remove button */}
                 <button
                   onClick={handleRemoveImage}
-                  className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors duration-200"
+                  className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors duration-200 z-10"
                   title="Remove image"
                 >
                   <X className="h-3 w-3" />
                 </button>
+
+                {/* Pencil Icon to trigger file input - Only shows on image hover */}
+                <button
+                  className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 hover:bg-blue-600 text-white transition-all duration-200 shadow-lg border-2 border-white z-10 opacity-0 group-hover:opacity-100"
+                  onClick={handlePencilClick}
+                  title="Change profile picture"
+                >
+                  <Pencil className="h-4 w-4 stroke-[1.5] text-white" />
+                </button>
               </div>
             ) : (
-              <User className="-mt-1.5 h-[65%] w-[65%] fill-slate-300/70 stroke-slate-400/50 stroke-[0.5]" />
-            )}
+              <>
+                <User className="-mt-1.5 h-[65%] w-[65%] fill-slate-300/70 stroke-slate-400/50 stroke-[0.5]" />
 
-            {/* Pencil Icon to trigger file input */}
-            <button
-              className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-white border border-gray-300 hover:bg-gray-50 transition-colors duration-200 shadow-sm"
-              onClick={handlePencilClick}
-              title="Change profile picture"
-            >
-              <Pencil className="h-3.5 w-3.5 stroke-[1.3] text-slate-500" />
-            </button>
+                {/* Pencil Icon for no image state - Always visible */}
+                <button
+                  className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 hover:bg-blue-600 text-white transition-colors duration-200 shadow-lg border-2 border-white z-10"
+                  onClick={handlePencilClick}
+                  title="Add profile picture"
+                >
+                  <Pencil className="h-4 w-4 stroke-[1.5] text-white" />
+                </button>
+              </>
+            )}
 
             {/* Hidden file input for image upload */}
             <input
@@ -146,6 +152,18 @@ const ProfilePicture = ({ media, setMedia }: IProps) => {
             />
           </div>
         </div>
+
+        {/* Remove button on the side of profile picture */}
+        {currentImage?.url && (
+          <Button
+            variant='outline'
+            size='sm'
+            className='pl-2 h-8 pr-4 w-auto text-red-600 border-red-300 hover:bg-red-50 hover:border-red-400'
+            onClick={handleDelete}
+          >
+            <Trash2 className='w-4 h-4 mr-2' /> Remove
+          </Button>
+        )}
       </div>
 
       {/* Modal for viewing the image */}
