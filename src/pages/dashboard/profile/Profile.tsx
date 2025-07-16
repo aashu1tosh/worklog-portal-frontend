@@ -7,19 +7,23 @@ import { MediaType } from "@/constants/enum";
 import { DocumentTitle } from "@/functions/DocumentTitle";
 import { handleFormSubmission } from "@/functions/formSubmission";
 import { getDeletedMediaIds, mediaUploadFn } from "@/functions/mediaUpload";
+import useAPI from "@/hooks/useAPI";
 import useApiMutation from "@/hooks/useAPIMutation";
 import useAuth from "@/hooks/useAuth";
 import useMedia from "@/hooks/useMedia";
+import type { IAuth } from "@/interfaces/auth/auth.interface";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CloudCheck, Phone, UserRound } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { IoMailOutline } from "react-icons/io5";
+import { toast } from "sonner";
 
 const Profile = () => {
     DocumentTitle("Profile Page");
-    const { authData } = useAuth();
+    const { authData, setIsAuthorized, setAuthData } = useAuth();
     const [media, setMedia] = useMedia();
+    const { getOne } = useAPI<IAuth>();
 
     const { updateMutation } = useApiMutation<
         Omit<IUpdateProfile, 'deletedMedia'> & {
@@ -69,29 +73,37 @@ const Profile = () => {
     }, [authData]);
 
     const onSubmit = async (data: IUpdateProfile) => {
-        // Handle form submission logic here
-        console.log("Form submitted with data:", data);
 
-        const mediaResponse = await mediaUploadFn(media?.selectedFiles, MediaType?.PROFILE_PICTURE, "profile picture");
-        const deleteMedia = getDeletedMediaIds(media?.deleteMedia)
-        console.log("🚀 ~ onSubmit ~ deleteMedia:", deleteMedia)
+        try {
+            const mediaResponse = await mediaUploadFn(media?.selectedFiles, MediaType?.PROFILE_PICTURE, "profile picture");
+            const deleteMedia = getDeletedMediaIds(media?.deleteMedia)
+            console.log("🚀 ~ onSubmit ~ deleteMedia:", deleteMedia)
 
-        const payload = {
-            ...data,
-            media: mediaResponse,
-            deleteMedia: deleteMedia,
-        };
+            const payload = {
+                ...data,
+                media: mediaResponse,
+                deleteMedia: deleteMedia,
+            };
 
-        await handleFormSubmission({
-            updateMutation: async () => {
-                await updateMutation.mutateAsync({
-                    id: "",
-                    data: payload,
-                });
-            },
-            isUpdate: true,
-        });
+            await handleFormSubmission({
+                updateMutation: async () => {
+                    await updateMutation.mutateAsync({
+                        id: "",
+                        data: payload,
+                    });
+                },
+                isUpdate: true,
+            });
 
+            const response = await getOne(endPoint?.auth?.isAuthenticated)
+            if (response?.status) setIsAuthorized(true)
+            else throw new Error('Update Failed')
+            setAuthData(response?.data);
+        } catch (error: any) {
+            toast.error("Error Occurred", {
+                description: error?.message
+            });
+        }
     };
 
     return (
