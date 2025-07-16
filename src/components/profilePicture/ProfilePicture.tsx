@@ -46,7 +46,7 @@ const ProfilePicture = ({ media, setMedia }: IProps) => {
     if (media.mediaGroup && media.mediaGroup.length > 0) {
       const mediaItem = media.mediaGroup[0];
       return {
-        url: mediaItem.path || mediaItem.url || mediaItem.file_path,
+        url: mediaItem.path,
         isFile: false,
         mediaItem: mediaItem
       };
