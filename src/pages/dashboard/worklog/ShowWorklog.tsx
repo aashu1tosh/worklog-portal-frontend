@@ -69,8 +69,9 @@ const ShowWorklog = (props: IProps) => {
         data={values ?? []}
         pagination={pagination}
         setPagination={setPagination}
-        addButtonLabel="Add New Company"
+        addButtonLabel="Add Worklog"
         setAddOpen={setAddOpen}
+        tableSearch={false}
       />
     </div>
   );

@@ -9,8 +9,8 @@ export const handleFormSubmission = async ({
 }: {
   createMutation?: () => Promise<void>;
   updateMutation?: () => Promise<void>;
-  reset: () => void;
-  setOpen: (data: boolean) => void;
+  reset?: () => void;
+  setOpen?: (data: boolean) => void;
   isUpdate?: boolean;
 }) => {
   try {
@@ -21,7 +21,7 @@ export const handleFormSubmission = async ({
       if (createMutation) resp = await createMutation();
     }
 
-    reset();
+    if (reset) reset();
     if (setOpen) setOpen(false);
 
     toast.success(isUpdate ? "Updated" : "Created", {

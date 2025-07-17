@@ -189,7 +189,7 @@ const Navbar = () => {
                 className="flex items-center gap-2 h-auto p-2 hover:bg-secondary text-foreground"
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="" alt="User" />
+                  <AvatarImage src={authData?.media?.[0]?.path} alt="User" />
                   <AvatarFallback className="bg-primary text-primary-foreground uppercase">
                     {fullName}
                   </AvatarFallback>
@@ -206,7 +206,7 @@ const Navbar = () => {
             <DropdownMenuContent align="end" className="w-56 bg-popover border-border">
               <DropdownMenuLabel className="text-popover-foreground">My Account</DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-border" />
-              <DropdownMenuItem className="text-popover-foreground hover:bg-secondary cursor-pointer">
+              <DropdownMenuItem className="text-popover-foreground hover:bg-secondary cursor-pointer" onClick={() => navigate('/dashboard/profile')}>
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>
               </DropdownMenuItem>

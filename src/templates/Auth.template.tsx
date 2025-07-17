@@ -1,4 +1,4 @@
-import { image } from '@/constants/image'
+import { image } from '@/data/image'
 import { RiArrowLeftDoubleLine } from 'react-icons/ri'
 import { Outlet, useNavigate } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ const AuthTemplate = () => {
         <div className='flex bg-[#F3F4F6]   dark:bg-dark  w-full min-h-[100vh] items-center justify-center  lg:px-[10rem] dark:lg:px-[25rem] md:px-[2rem] px-[1rem]'>
             <div className='grid w-full grid-cols-2  md:h-[28rem] h-[100%]'>
                 <div className='border-l-[1px] border-y-[1px]  border-gray-100 dark:border-slate-600 md:block hidden dark:hidden'>
-                    <img className='h-[100%] w-[100%] object-cover' src={image?.authBackground} alt="Auth Background" />
+                    <img className='h-[100%] w-[100%] object-cover' src={image?.authBg ?? image?.fallback} alt="Auth Background" />
                 </div>
                 <div className='bg-white dark:bg-dark-light  border-[1px] border-gray-100 dark:border-slate-600  md:col-span-1 dark:md:col-span-2 col-span-2 flex flex-col justify-center py-5 lg:px-12 md:px-5 px-4'>
                     <div className=''>
