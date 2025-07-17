@@ -1,6 +1,9 @@
+import { DataTablePagination } from "@/components/table/pagination/index";
+import { DataTableSearch } from "@/components/table/TableSearch";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Table,
   TableBody,
@@ -20,8 +23,7 @@ import {
 } from "@tanstack/react-table";
 import { Download, Loader2, Plus, RefreshCcwDot } from "lucide-react";
 import React, { type ReactNode } from "react";
-import { DataTablePagination } from "./pagination/index";
-import { DataTableSearch } from "./TableSearch";
+import { LuListFilter } from "react-icons/lu";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,8 +33,8 @@ interface DataTableProps<TData, TValue> {
   setPagination: React.Dispatch<React.SetStateAction<IPagination>>;
   tableSearch?: boolean;
   addButton?: boolean;
-  tools?: ReactNode;
-  toolsButtonLabel?: string;
+  filter?: ReactNode;
+  filterButtonLabel?: string;
   addButtonLabel?: string;
   addButtonIcon?: ReactNode;
   setAddOpen?: (data: boolean) => void;
@@ -41,6 +43,7 @@ interface DataTableProps<TData, TValue> {
   setRowSelection?: React.Dispatch<React.SetStateAction<RowSelectionState>>;
   onSelectedRowsChange?: (selectedRows: TData[]) => void;
   enableRowSelection?: boolean;
+  tableSearchPlaceholder?: string;
 }
 
 function DataTable<TData, TValue>({
@@ -51,8 +54,8 @@ function DataTable<TData, TValue>({
   setPagination,
   tableSearch = true,
   addButton = true,
-  tools,
-  // toolsButtonLabel = "Tools",
+  filter,
+  filterButtonLabel = "Filter",
   addButtonLabel = "Add New",
   addButtonIcon,
   setAddOpen,
@@ -61,6 +64,7 @@ function DataTable<TData, TValue>({
   setRowSelection,
   onSelectedRowsChange,
   enableRowSelection = true,
+  tableSearchPlaceholder = "Search...",
 }: DataTableProps<TData, TValue>) {
   // Create selection column
   const selectionColumn: ColumnDef<TData, TValue> = {
@@ -135,15 +139,13 @@ function DataTable<TData, TValue>({
       {/* Header Section - Search, Tools, Add Button */}
       <div className="flex items-center justify-between">
         <div className="flex flex-1 items-center space-x-2">
-          {tableSearch ? (
+          {tableSearch && (
             <DataTableSearch
               pagination={pagination}
               setPagination={setPagination}
               className="max-w-sm"
-              placeholder="Search..."
+              placeholder={tableSearchPlaceholder}
             />
-          ) : (
-            <div></div>
           )}
 
           {/* Selected rows indicator */}
@@ -167,8 +169,19 @@ function DataTable<TData, TValue>({
           {customJsx}
 
           {/* Tools */}
-          {tools && <div className="flex items-center space-x-2">{tools}</div>}
-
+          {filter && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="ml-2">
+                  <LuListFilter className="mr-2 h-4 w-4" />
+                  <span className='md:flex hidden'>{filterButtonLabel}</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className='w-auto' align='start'>
+                {filter}
+              </PopoverContent>
+            </Popover>
+          )}
 
           <Button onClick={() => {
             setPagination({

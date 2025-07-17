@@ -76,36 +76,8 @@ const ShowWorklog = (props: IProps) => {
           data={values ?? []}
           pagination={pagination}
           setPagination={setPagination}
-        />
-      ) : (
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-900 rounded-xl p-8 shadow-lg border border-blue-100 dark:border-slate-700">
-          <div className="max-w-md mx-auto">
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full mb-4">
-                <svg
-                  className="w-8 h-8 text-blue-600 dark:text-blue-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                Select Employee
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                Choose an employee to view their worklog entries
-              </p>
-            </div>
-
-            <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-slate-600">
+          filter={
+            <div className="flex justify-end w-56">
               <GenericAPISelect<ICompanyEmployee>
                 key={'employee-select'}
                 required
@@ -120,11 +92,50 @@ const ShowWorklog = (props: IProps) => {
                 extractId={(i: ICompanyEmployee) => i?.id ?? ''}
               />
             </div>
+          }
+        />
+      ) : (
+        <div className="h-[70vh] flex items-center justify-center">
+          <div className="bg-gradient-to-br from-[hsl(60,9%,98%)] to-[hsl(60,15%,97%)] rounded-xl p-8 shadow-lg border border-[hsl(60,20%,96%)] w-full max-w-md">
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-[hsl(15,75%,80%)] rounded-full mb-4">
+                <svg
+                  className="w-8 h-8 text-[hsl(15,85%,45%)]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-[hsl(108,15%,15%)] mb-2">
+                Select Employee
+              </h3>
+              <p className="text-sm text-[hsl(108,15%,35%)]">
+                Choose an employee to view their worklog entries
+              </p>
+            </div>
 
-            <div className="mt-4 text-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                💡 Tip: Start typing to search for employees
-              </span>
+            <div className="bg-[hsl(60,20%,96%)] rounded-lg p-6 shadow-sm border border-[hsl(60,15%,90%)]">
+              <GenericAPISelect<ICompanyEmployee>
+                key={'employee-select'}
+                required
+                value={employeeId ?? ''}
+                handleChange={(e: string) => {
+                  setEmployeeId && setEmployeeId(e);
+                }}
+                label={'Select an employee'}
+                endpoint={endPoint.company.companyEmployee}
+                queryParams={{ page: 1, limit: 5 }}
+                extractName={(i: ICompanyEmployee) => i?.firstName + ' ' + i?.lastName}
+                extractId={(i: ICompanyEmployee) => i?.id ?? ''}
+              />
             </div>
           </div>
         </div>
