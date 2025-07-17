@@ -77,7 +77,6 @@ const Profile = () => {
         try {
             const mediaResponse = await mediaUploadFn(media?.selectedFiles, MediaType?.PROFILE_PICTURE, "profile picture");
             const deleteMedia = getDeletedMediaIds(media?.deleteMedia)
-            console.log("🚀 ~ onSubmit ~ deleteMedia:", deleteMedia)
 
             const payload = {
                 ...data,
