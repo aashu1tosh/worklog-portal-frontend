@@ -6,7 +6,8 @@ export const endPoint = {
         isAuthenticated: '/auth/is-authenticated',
         refreshToken: '/auth/public/refresh-token',
         updatePassword: "/auth/update-password",
-        profile: "/auth/update-profile"
+        profile: "/auth/update-profile",
+        forgotPassword: "/auth/public/forgot-password",
     },
     // ADMIN
     admin: {

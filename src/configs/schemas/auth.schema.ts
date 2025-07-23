@@ -42,5 +42,11 @@ export interface IUpdateProfile {
   lastName: string;
 }
 
+export const forgotPasswordSchema = Yup.object().shape({
+  email: Yup.string()
+    .required('Email is required')
+    .email('Invalid email address'),
+})
+
 
 

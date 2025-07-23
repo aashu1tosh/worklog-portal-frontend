@@ -114,7 +114,7 @@ const Login = () => {
                         htmlFor='terms'
                         className='text-sm  leading-none  text-destructive cursor-pointer hover:underline'
                         onClick={() => {
-                            navigate('/forget-password')
+                            navigate('/auth/forgot-password')
                         }}
                     >
                         Forgot Password?
