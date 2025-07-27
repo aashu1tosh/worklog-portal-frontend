@@ -8,6 +8,7 @@ export const endPoint = {
         updatePassword: "/auth/update-password",
         profile: "/auth/update-profile",
         forgotPassword: "/auth/public/forgot-password",
+        restorePassword: "/auth/public/restore-password",
     },
     // ADMIN
     admin: {
