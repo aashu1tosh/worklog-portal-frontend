@@ -42,5 +42,19 @@ export interface IUpdateProfile {
   lastName: string;
 }
 
+export const forgotPasswordSchema = Yup.object().shape({
+  email: Yup.string()
+    .required('Email is required')
+    .email('Invalid email address'),
+})
+
+export const restorePasswordSchema = Yup.object().shape({
+  newPassword: Yup.string()
+    .required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('newPassword')], 'Passwords do not match')
+    .required('Confirm password is required'),
+})
+
 
 
