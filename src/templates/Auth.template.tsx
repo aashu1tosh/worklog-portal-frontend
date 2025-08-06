@@ -5,40 +5,74 @@ import { Outlet, useNavigate } from 'react-router-dom'
 const AuthTemplate = () => {
     const navigate = useNavigate()
     return (
-
-        <div className='flex bg-[#F3F4F6]   dark:bg-dark  w-full min-h-[100vh] items-center justify-center  lg:px-[10rem] dark:lg:px-[25rem] md:px-[2rem] px-[1rem]'>
-            <div className='grid w-full grid-cols-2  md:h-[28rem] h-[100%]'>
-                <div className='border-l-[1px] border-y-[1px]  border-gray-100 dark:border-slate-600 md:block hidden dark:hidden'>
-                    <img className='h-[100%] w-[100%] object-cover' src={image?.authBg ?? image?.fallback} alt="Auth Background" />
+        <div className='flex bg-background w-full min-h-[100vh] items-center justify-center lg:px-[10rem] md:px-[2rem] px-[1rem] transition-colors duration-300'>
+            <div className='grid w-full grid-cols-1 md:grid-cols-2 h-auto shadow-2xl rounded-lg overflow-hidden bg-card border border-border'>
+                
+                {/* Auth Background Image Section */}
+                <div className='relative md:block hidden overflow-hidden'>
+                    <img 
+                        className='h-full w-full object-cover' 
+                        src={image?.authBg ?? image?.fallback} 
+                        alt="Auth Background" 
+                    />
+                    {/* Gradient overlay for better contrast in both themes */}
+                    <div className='absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-transparent'></div>
+                    
+                    {/* Optional branding overlay */}
+                    <div className='absolute bottom-6 left-6 text-primary-foreground'>
+                        <h2 className='text-2xl font-bold mb-2 drop-shadow-lg'>Work Log Portal</h2>
+                        <p className='text-sm opacity-90 drop-shadow-md'>Streamline your productivity</p>
+                    </div>
                 </div>
-                <div className='bg-white dark:bg-dark-light  border-[1px] border-gray-100 dark:border-slate-600  md:col-span-1 dark:md:col-span-2 col-span-2 flex flex-col justify-center py-5 lg:px-12 md:px-5 px-4'>
-                    <div className=''>
-                        <h3 className='font-extrabold lg:text-[1.5rem] md:text-[1.3rem] text-[1.15rem] text-primary-dark dark:text-slate-200'>
+                
+                {/* Auth Form Container */}
+                <div className='bg-card flex flex-col justify-center py-8 lg:px-12 md:px-8 px-6 transition-colors duration-300'>
+                    
+                    {/* Header Section */}
+                    <div className='mb-6'>
+                        <h3 className='font-extrabold lg:text-2xl md:text-xl text-lg text-foreground mb-2 transition-colors duration-300'>
                             Welcome to Work Log Portal
                         </h3>
+                        <p className='text-muted-foreground text-sm transition-colors duration-300'>
+                            Please sign in to continue
+                        </p>
                     </div>
-                    <div className='pb-2 pt-3'>
+                    
+                    {/* Form Content */}
+                    <div className='mb-6'>
                         <Outlet />
                     </div>
-                    <p
-                        onClick={() => {
-                            navigate(-1)
-                        }}
-                        className='text-left pt-3 flex  items-center text-primary-600 dark:text-slate-300 text-xs cursor-pointer hover:underline'
+                    
+                    {/* Go Back Button */}
+                    <button
+                        onClick={() => navigate(-1)}
+                        className='self-start flex items-center gap-2 text-primary hover:text-primary-dark text-sm cursor-pointer hover:underline transition-all duration-200 group'
                     >
-                        <RiArrowLeftDoubleLine size={15} />
-                        {'Go Back'}
-                    </p>
-                    <div className='pt-4'>
-                        <p className='text-center text-gray-600 dark:text-slate-400 text-xs'>
-                            { }&nbsp;
-                            <a href='https://www.aashutoshparajuli.com.np' className='text-primary dark:text-slate-300'>
+                        <RiArrowLeftDoubleLine 
+                            size={16} 
+                            className='group-hover:-translate-x-1 transition-transform duration-200' 
+                        />
+                        Go Back
+                    </button>
+                    
+                    {/* Footer Section */}
+                    <div className='mt-8 pt-6 border-t border-border transition-colors duration-300'>
+                        <div className='text-center space-y-2'>
+                            <p className='text-muted-foreground text-xs transition-colors duration-300'>
+                                Developed by
+                            </p>
+                            <a 
+                                href='https://www.aashutoshparajuli.com.np' 
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='block text-primary hover:text-primary-dark hover:underline transition-colors duration-200 font-medium text-sm'
+                            >
                                 Aashutosh Parajuli
                             </a>
-                        </p>
-                        <p className='text-center text-gray-600 dark:text-slate-400 text-xs'>
-                            {new Date().getFullYear()} Work Log Portal. No rights reserved feel free to use.
-                        </p>
+                            <p className='text-muted-foreground text-xs transition-colors duration-300 pt-2'>
+                                © {new Date().getFullYear()} Work Log Portal. Open source & free to use.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
